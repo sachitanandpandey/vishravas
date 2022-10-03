@@ -40,17 +40,22 @@
     <v-main>
       <router-view/>
     </v-main>
+    <v-fotter>
+      <FooterVue/>
+    </v-fotter>
   </v-app>
+
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import FooterVue from './components/Footer.vue'
 
 export default Vue.extend({
   name: 'App',
-
   data: () => ({
     //
-  })
+  }),
+  components: { FooterVue }
 })
 </script>
