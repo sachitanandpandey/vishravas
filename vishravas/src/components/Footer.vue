@@ -1,42 +1,25 @@
-<!-- <template>
-    <v-container>
-    Footer
-    </v-container>
-  </template>
-
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-  name: 'FooterView',
-
-  data: () => ({
-
-  })
-})
-</script> -->
-
 <template>
     <v-container>
-        <v-footer padless>
-            <v-card flat class="text-center">
-                <!-- <v-card-text>
+      <v-footer padless>
+        <v-card flat class="text-center">
+          <v-card-text>
             <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
               <v-icon size="24px">{{ icon }}</v-icon>
             </v-btn>
-          </v-card-text> -->
-                <!-- <v-card-text class="pt-0 text-center">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।
-                    मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥
-                </v-card-text> -->
-                <v-divider></v-divider>
-                <v-card-text>
-                    {{ new Date().getFullYear() }} —
-                    <strong>CopyRight@Vishravas</strong>
-                </v-card-text>
-            </v-card>
-        </v-footer>
+          </v-card-text>
+          <v-card-text
+            class="pt-0"
+          >Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</v-card-text>
+          <v-divider></v-divider>
+          <v-card-text>
+            {{ new Date().getFullYear() }} —
+            <strong>Photography Vuetify Project</strong>
+          </v-card-text>
+        </v-card>
+      </v-footer>
     </v-container>
-</template>
+  </template>
+
 <script lang="ts">
 export default {
   name: 'FooterView',
