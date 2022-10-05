@@ -6,9 +6,12 @@
                 <!-- <v-layout align-end justify-end> -->
                     <v-flex xs20 sm8 md4>
                                 <form @submit.prevent="submit">
-                                    <input v-model="data.username" type="user" class="form-control" placeholder="user" required id="ip1">
-                                    <input v-model="data.password" type="password" class="form-control" placeholder="Password" required id="ip2">
-                                    <button class="w-100 btn btn-lg" type="submit" color="primary">Sign in</button>
+                                    <!-- <input v-model="data.username" type="user" class="form-control" placeholder="user" required id="ip1">
+                                                                    <input v-model="data.password" type="password" class="form-control" placeholder="Password" required id="ip2"> -->
+                                    <!-- <button class="w-100 btn btn-lg" type="submit" color="primary">Sign in</button> -->
+                                    <v-btn rounded color="primary" dark type="submit">
+                                        googleSignin
+                                    </v-btn>
                                 </form>
                     </v-flex>
                 </v-layout>

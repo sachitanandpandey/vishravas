@@ -5,16 +5,17 @@
         <v-card-title class="primary lighten-1">
           <v-layout class="flex justify-center grow">
             <strong class="subheading white--text">
-              Some Random Text
+                कर्मण्येवाधिकारस्ते मा फलेषु कदाचन ।
+मा कर्मफलहेतुर्भुर्मा ते संगोऽस्त्वकर्मणि ॥
             </strong>
           </v-layout>
-          <v-checkbox dark label="Click Me" class="shrink"></v-checkbox>
+          <!-- <v-checkbox dark label="Click Me" class="shrink"></v-checkbox>
           <v-btn v-on:click="saveClicked">
             <v-icon>save</v-icon> Save
           </v-btn>
           <v-btn>
             <v-icon>close</v-icon> Cancel
-          </v-btn>
+          </v-btn> -->
         </v-card-title>
       </v-card>
         <!-- <v-card flat class="text-center">
