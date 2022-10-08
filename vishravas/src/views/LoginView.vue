@@ -150,7 +150,9 @@ export default {
     }
 
     #app {
-  background: url('https://ohlaladani.com.br/wp-content/uploads/wallpaper-OHLALADANI_DESKTOP_WALLPAPERS_AVENTURA-2.jpg')
+  /* background: url('https://ohlaladani.com.br/wp-content/uploads/wallpaper-OHLALADANI_DESKTOP_WALLPAPERS_AVENTURA-2.jpg') */
+  background: url('../assets/V2.png')
+
     no-repeat center center fixed !important;
   background-size: cover;
 }

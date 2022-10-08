@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style>
+<!-- <style>
     .center {
         display: block;
         margin-left: auto;
@@ -135,8 +135,8 @@ export default {
     }
 
     #app {
-  background: url('https://ohlaladani.com.br/wp-content/uploads/wallpaper-OHLALADANI_DESKTOP_WALLPAPERS_AVENTURA-2.jpg')
+  background: url('https://photos.app.goo.gl/8Qg5W6Q9bsNG9TAw7')
     no-repeat center center fixed !important;
   background-size: cover;
 }
-    </style>
+    </style> -->
