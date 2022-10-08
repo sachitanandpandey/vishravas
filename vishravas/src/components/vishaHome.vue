@@ -24,7 +24,7 @@
 <script>
 import { reactive } from 'vue'
 import router from '../router'
-import { getAuth, signOut } from 'firebase/auth'
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
 
 export default {
   name: 'vishHome',
@@ -33,9 +33,20 @@ export default {
     const data = reactive({
       submit: ''
     })
+    const auth = getAuth()
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid
+        // ...
+      } else {
+        router.push('/')
+      }
+    })
 
     const submit = async () => {
-      const auth = getAuth()
       signOut(auth).then(() => {
         router.push('/')
       }).catch((error) => {
@@ -52,91 +63,4 @@ export default {
 }
 </script>
 
-<!-- <style>
-    .center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-    }
-
-    body {
-        background-color: #0066CC;
-    }
-
-    .form-signin {
-        padding-top: 25px;
-        width: 100%;
-        max-width: 930px;
-        padding: 255px;
-        margin: auto;
-    }
-
-    .form-signin .checkbox {
-        font-weight: 400;
-    }
-
-    .form-signin .form-control {
-        position: relative;
-        box-sizing: border-box;
-        height: auto;
-        padding: 10px;
-        font-size: 16px;
-    }
-
-    .form-signin .form-control:focus {
-        z-index: 2;
-    }
-
-    .form-signin input[type="user"] {
-        margin-bottom: -1px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-
-    .form-signin input[type="password"] {
-        margin-bottom: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-
-    #ip2 {
-        border-radius: 25px;
-        border: 2px solid #609;
-        padding: 20px;
-        width: 400px;
-        height: 15px;
-    }
-
-    #ip1 {
-        border-radius: 25px;
-        border: 2px solid #609;
-        padding: 20px;
-        width: 400px;
-        height: 15px;
-    }
-
-    #arrowlogin {
-        background: linear-gradient(-135deg,
-                transparent 22px,
-                #04e6fb 22px,
-                #65ff9a 100%) top right,
-            linear-gradient(-45deg,
-                transparent 22px,
-                #04e6fb 22px,
-                #65ff9a 100%) bottom right;
-        background-size: 100% 50%;
-        background-repeat: no-repeat;
-    }
-
-    #weekdropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    #app {
-  background: url('https://photos.app.goo.gl/8Qg5W6Q9bsNG9TAw7')
-    no-repeat center center fixed !important;
-  background-size: cover;
-}
-    </style> -->
+<style></style>
