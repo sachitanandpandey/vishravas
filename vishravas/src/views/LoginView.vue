@@ -95,7 +95,6 @@
 import { reactive } from 'vue'
 import router from '../router'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-// import { db } from '../firebase/db'
 import { db } from '../main'
 import { collection, addDoc, where, query, doc, setDoc } from 'firebase/firestore'
 
@@ -127,23 +126,14 @@ export default {
           setDoc(doc(colRef, user.email), {
             email: user.email
           })
-
-          //   addDoc(colRef, {
-          //     email: user.email
-          //   })
-
           console.log(user.email)
           router.push('/home')
-          // ...
         }).catch((error) => {
           // Handle Errors here.
           const errorCode = error.code
           const errorMessage = error.message
           console.log(errorMessage)
-          // The email of the user's account used.
-          // The AuthCredential type that was used.
           const credential = GoogleAuthProvider.credentialFromError(error)
-          // ...
         })
     }
 
@@ -244,7 +234,6 @@ body {
 }
 
 #app {
-    /* background: url('https://ohlaladani.com.br/wp-content/uploads/wallpaper-OHLALADANI_DESKTOP_WALLPAPERS_AVENTURA-2.jpg') */
     background: url('../assets/V2.png') no-repeat center center fixed !important;
     background-size: cover;
 }
