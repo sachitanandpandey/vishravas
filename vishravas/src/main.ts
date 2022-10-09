@@ -7,6 +7,9 @@ import vuetify from './plugins/vuetify'
 
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
+// import { getFirestore } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore'
+// import { getDatabase } from 'firebase/database'
 
 Vue.config.productionTip = false
 
@@ -24,12 +27,15 @@ const firebaseConfig = {
   storageBucket: 'vishrava-616bc.appspot.com',
   messagingSenderId: '49213770968',
   appId: '1:49213770968:web:3de77f366d0c904d1d1bad',
-  measurementId: 'G-M43S1ME3MD'
+  measurementId: 'G-M43S1ME3MD',
+  databaseURL: 'https://vishrava-616bc-default-rtdb.firebaseio.com'
 }
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
 export const analytics = getAnalytics(app)
+// export const db = getDatabase(app)
+export const db = getFirestore(app)
 
 new Vue({
   router,

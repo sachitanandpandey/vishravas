@@ -2,11 +2,11 @@
     <v-app id="app">
         <v-content>
             <v-container fluid fill-height>
-                <v-card max-width="400" class="d-flex justify-space-around mb-6">
+                <v-card max-width="800" height="400" class="d-flex justify-space-around mb-6">
                     <v-container>
                         <v-row dense>
-                            <v-col cols="12">
-                                <v-card color="#385F73" theme="dark">
+                            <v-col cols="20">
+                                <v-card color="#385F73" theme="dark" height="100%" width="800">
                                     <v-card-title class="text-h5">
                                         Unlimited music now
                                     </v-card-title>
@@ -19,52 +19,6 @@
                                             Listen Now
                                         </v-btn>
                                     </v-card-actions>
-                                </v-card>
-                            </v-col>
-
-                            <v-col cols="12">
-                                <v-card color="#1F7087" theme="dark">
-                                    <div class="d-flex flex-no-wrap justify-space-between">
-                                        <div>
-                                            <v-card-title class="text-h5">
-                                                Supermodel
-                                            </v-card-title>
-
-                                            <v-card-subtitle>Foster the People</v-card-subtitle>
-
-                                            <v-card-actions>
-                                                <v-btn class="ml-2" variant="outlined" size="small">
-                                                    START RADIO
-                                                </v-btn>
-                                            </v-card-actions>
-                                        </div>
-
-                                        <v-avatar class="ma-3" size="125" rounded="0">
-                                            <v-img src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"></v-img>
-                                        </v-avatar>
-                                    </div>
-                                </v-card>
-                            </v-col>
-
-                            <v-col cols="12">
-                                <v-card color="#952175" theme="dark">
-                                    <div class="d-flex flex-no-wrap justify-space-between">
-                                        <div>
-                                            <v-card-title class="text-h5">
-                                                Halcyon Days
-                                            </v-card-title>
-
-                                            <v-card-subtitle>Ellie Goulding</v-card-subtitle>
-
-                                            <v-card-actions>
-                                                <v-btn class="ml-2" icon="mdi-play" variant="text"></v-btn>
-                                            </v-card-actions>
-                                        </div>
-
-                                        <v-avatar class="ma-3" size="125" rounded="0">
-                                            <v-img src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"></v-img>
-                                        </v-avatar>
-                                    </div>
                                 </v-card>
                             </v-col>
                         </v-row>
@@ -84,7 +38,56 @@
                     </v-flex>
                 </v-layout>
             </v-container>
+
         </v-content>
+        <template>
+            <v-container>
+            <v-row>
+                <v-card max-width="200" height="300">
+                    <v-list-item three-line>
+                        <v-list-item-content>
+                            <div class="text-overline mb-4">
+                                OVERLINE
+                            </div>
+                            <v-list-item-title class="text-h5 mb-1">
+                                Headline 5
+                            </v-list-item-title>
+                            <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+                        </v-list-item-content>
+
+                        <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+                    </v-list-item>
+
+                    <v-card-actions>
+                        <v-btn outlined rounded text>
+                            Button
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+                <v-card max-width="200" height="300">
+                    <v-list-item three-line>
+                        <v-list-item-content>
+                            <div class="text-overline mb-4">
+                                OVERLINE
+                            </div>
+                            <v-list-item-title class="text-h5 mb-1">
+                                Headline 5
+                            </v-list-item-title>
+                            <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+                        </v-list-item-content>
+
+                        <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+                    </v-list-item>
+
+                    <v-card-actions>
+                        <v-btn outlined rounded text>
+                            Button
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-row>
+        </v-container>
+        </template>
     </v-app>
 </template>
 
@@ -92,6 +95,9 @@
 import { reactive } from 'vue'
 import router from '../router'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+// import { db } from '../firebase/db'
+import { db } from '../main'
+import { collection, addDoc, where, query, doc, setDoc } from 'firebase/firestore'
 
 export default {
   name: 'Login',
@@ -111,6 +117,21 @@ export default {
           const token = credential.accessToken
           // The signed-in user info.
           const user = result.user
+          const data = {
+            name: 'Los Angeles',
+            state: 'CA',
+            country: 'USA'
+          }
+          const colRef = collection(db, 'profile')
+
+          setDoc(doc(colRef, user.email), {
+            email: user.email
+          })
+
+          //   addDoc(colRef, {
+          //     email: user.email
+          //   })
+
           console.log(user.email)
           router.push('/home')
           // ...
@@ -120,7 +141,6 @@ export default {
           const errorMessage = error.message
           console.log(errorMessage)
           // The email of the user's account used.
-          const email = error.customData.email
           // The AuthCredential type that was used.
           const credential = GoogleAuthProvider.credentialFromError(error)
           // ...
@@ -129,7 +149,13 @@ export default {
 
     return {
       data,
-      submit
+      submit,
+      cards: [
+        { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 },
+        { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 },
+        { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 },
+        { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 }
+      ]
     }
   }
 }
