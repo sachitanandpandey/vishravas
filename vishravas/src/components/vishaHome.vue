@@ -40,6 +40,7 @@ export default {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid
+        console.log(user.email)
         // ...
       } else {
         router.push('/')

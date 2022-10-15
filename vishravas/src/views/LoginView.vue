@@ -42,8 +42,17 @@
         </v-content>
         <template>
             <v-container>
-            <v-row>
-                <v-card max-width="200" height="300">
+                <v-row>
+                    <div v-for="item in data.doclist" v-bind:key="item.id" class="pa-md-2">
+                        <v-card max-width="200" height="300">
+                            <v-img :src=item.listposter class="white--text align-end"
+                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="300px" width="200px">
+                            </v-img>
+                        </v-card>
+                    </div>
+                </v-row>
+            <!-- <v-row> -->
+                <!-- <v-card max-width="200" height="300">
                     <v-list-item three-line>
                         <v-list-item-content>
                             <div class="text-overline mb-4">
@@ -84,26 +93,32 @@
                             Button
                         </v-btn>
                     </v-card-actions>
-                </v-card>
-            </v-row>
+                </v-card> -->
+            <!-- </v-row> -->
         </v-container>
         </template>
     </v-app>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, onMounted } from 'vue'
 import router from '../router'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { db } from '../main'
-import { collection, addDoc, where, query, doc, setDoc } from 'firebase/firestore'
+import { collection, addDoc, where, query, doc, setDoc, getDocs } from 'firebase/firestore'
 
 export default {
   name: 'Login',
 
   setup () {
     const data = reactive({
-      submit: ''
+      submit: '',
+      doclist: ''
+    })
+
+    onMounted(async () => {
+      const querySnapshot = await getDocs(collection(db, 'projects'))
+      data.doclist = querySnapshot.docs.map(doc => doc.data())
     })
 
     const submit = async () => {
@@ -116,11 +131,6 @@ export default {
           const token = credential.accessToken
           // The signed-in user info.
           const user = result.user
-          const data = {
-            name: 'Los Angeles',
-            state: 'CA',
-            country: 'USA'
-          }
           const colRef = collection(db, 'profile')
 
           setDoc(doc(colRef, user.email), {
@@ -132,20 +142,13 @@ export default {
           // Handle Errors here.
           const errorCode = error.code
           const errorMessage = error.message
-          console.log(errorMessage)
           const credential = GoogleAuthProvider.credentialFromError(error)
         })
     }
 
     return {
       data,
-      submit,
-      cards: [
-        { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 },
-        { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 },
-        { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 },
-        { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 }
-      ]
+      submit
     }
   }
 }
