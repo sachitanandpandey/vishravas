@@ -2,41 +2,91 @@
     <v-app id="app">
         <v-content>
             <v-container fluid fill-height>
-                <v-card max-width="800" height="400" class="d-flex justify-space-around mb-6">
-                    <v-container>
-                        <v-row dense>
-                            <v-col cols="20">
-                                <v-card color="#385F73" theme="dark" height="100%" width="800">
-                                    <v-card-title class="text-h5">
-                                        Unlimited music now
-                                    </v-card-title>
+                <v-row>
+                    <v-card max-width="800" height="400" class="d-flex justify-space-around mb-6">
+                        <v-container>
+                            <v-row dense>
+                                <v-col cols="20">
+                                    <v-card color="#385F73" theme="dark" height="100%" width="800">
+                                        <v-card-title class="text-h5">
+                                            Unlimited music now
+                                        </v-card-title>
+                                        <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever,
+                                            online and offline.</v-card-subtitle>
+                                        <v-card-actions>
+                                            <v-btn variant="text">
+                                                Listen Now
+                                            </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-card>
+                    <v-row>
+                        <template>
+                            <v-card max-width="400" class="mx-auto">
 
-                                    <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever,
-                                        online and offline.</v-card-subtitle>
+                                <v-container>
+                                    <v-row dense>
+                                        <v-col cols="12">
+                                            <v-card color="#385F73" dark>
+                                                <v-card-title class="text-h5">
+                                                    Unlimited music now
+                                                </v-card-title>
 
-                                    <v-card-actions>
-                                        <v-btn variant="text">
-                                            Listen Now
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-col>
+                                                <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and
+                                                    offline.</v-card-subtitle>
+
+                                                <v-card-actions>
+                                                    <v-btn text>
+                                                        Listen Now
+                                                    </v-btn>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-col>
+
+                                        <v-col v-for="(item, i) in noticelist" :key="i" cols="12">
+                                            <v-card :color="item.color" dark>
+                                                <div class="d-flex flex-no-wrap justify-space-between">
+                                                    <div>
+                                                        <v-card-title class="text-h5" v-text="item.title"></v-card-title>
+
+                                                        <v-card-subtitle v-text="item.artist"></v-card-subtitle>
+
+                                                        <v-card-actions>
+                                                            <v-btn v-if="item.artist === 'Ellie Goulding'" class="ml-2 mt-3" fab icon
+                                                                height="40px" right width="40px">
+                                                                <v-icon>mdi-play</v-icon>
+                                                            </v-btn>
+
+                                                            <v-btn v-else class="ml-2 mt-5" outlined rounded small>
+                                                                START RADIO
+                                                            </v-btn>
+                                                        </v-card-actions>
+                                                    </div>
+
+                                                    <v-avatar class="ma-3" size="125" tile>
+                                                        <v-img :src="item.src"></v-img>
+                                                    </v-avatar>
+                                                </div>
+                                            </v-card>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card>
+                        </template>
                         </v-row>
-                    </v-container>
-                </v-card>
-                <v-layout align-center justify-end>
-                    <!-- <v-layout align-end justify-end> -->
+                    <v-layout align-center justify-center>
                     <v-flex xs20 sm8 md4>
                         <form @submit.prevent="submit">
-                            <!-- <input v-model="data.username" type="user" class="form-control" placeholder="user" required id="ip1">
-                                                                    <input v-model="data.password" type="password" class="form-control" placeholder="Password" required id="ip2"> -->
-                            <!-- <button class="w-100 btn btn-lg" type="submit" color="primary">Sign in</button> -->
                             <v-btn rounded color="primary" dark type="submit">
                                 googleSignin
                             </v-btn>
                         </form>
                     </v-flex>
                 </v-layout>
+                </v-row>
             </v-container>
 
         </v-content>
@@ -51,50 +101,6 @@
                         </v-card>
                     </div>
                 </v-row>
-            <!-- <v-row> -->
-                <!-- <v-card max-width="200" height="300">
-                    <v-list-item three-line>
-                        <v-list-item-content>
-                            <div class="text-overline mb-4">
-                                OVERLINE
-                            </div>
-                            <v-list-item-title class="text-h5 mb-1">
-                                Headline 5
-                            </v-list-item-title>
-                            <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-                        </v-list-item-content>
-
-                        <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-                    </v-list-item>
-
-                    <v-card-actions>
-                        <v-btn outlined rounded text>
-                            Button
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-                <v-card max-width="200" height="300">
-                    <v-list-item three-line>
-                        <v-list-item-content>
-                            <div class="text-overline mb-4">
-                                OVERLINE
-                            </div>
-                            <v-list-item-title class="text-h5 mb-1">
-                                Headline 5
-                            </v-list-item-title>
-                            <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-                        </v-list-item-content>
-
-                        <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-                    </v-list-item>
-
-                    <v-card-actions>
-                        <v-btn outlined rounded text>
-                            Button
-                        </v-btn>
-                    </v-card-actions>
-                </v-card> -->
-            <!-- </v-row> -->
         </v-container>
         </template>
     </v-app>
@@ -146,9 +152,25 @@ export default {
         })
     }
 
+    const noticelist = [
+      {
+        color: '#1F7087',
+        src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
+        title: 'Supermodel',
+        artist: 'Foster the People'
+      },
+      {
+        color: '#952175',
+        src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
+        title: 'Halcyon Days',
+        artist: 'Ellie Goulding'
+      }
+    ]
+
     return {
       data,
-      submit
+      submit,
+      noticelist
     }
   }
 }
