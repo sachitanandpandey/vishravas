@@ -1,15 +1,30 @@
+<!-- eslint-disable vue/no-parsing-error -->
 <template>
     <v-app id="app">
         <v-content>
             <v-container fluid fill-height>
                 <v-row>
-                    <v-card max-width="800" height="400" class="d-flex justify-space-around mb-6">
+                    <v-card max-width="800px" height="350px" class="d-flex justify-space-around mb-6">
+
                         <v-container>
+
                             <v-row dense>
                                 <v-col cols="20">
-                                    <v-card color="#385F73" theme="dark" height="100%" width="800">
-                                        <v-card-title class="text-h5">
-                                            Unlimited music now
+                                    <v-card max-width="800" height="300">
+
+                                        <v-img :src=data.premierlist[0].fullposter class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                                            height="300px" width="800px">
+                                        <v-row><v-col cols="20"><h1>{{data.premierlist[0].status}}</h1></v-col></v-row>
+                                        <v-row><v-col cols="20">{{data.premierlist[0].desc}}</v-col></v-row>
+                                        </v-img>
+
+                                    </v-card>
+                                    <!-- <v-card color="#385F73" theme="dark" height="100%" width="800">
+                                        <v-img :src=data.premierlist[0].fullposter class="white--text align-end"
+                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="10%" width="800">
+                            </v-img> -->
+                                        <!-- <v-card-title class="text-h5">
+                                            {{data.premierlist}}
                                         </v-card-title>
                                         <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever,
                                             online and offline.</v-card-subtitle>
@@ -17,8 +32,8 @@
                                             <v-btn variant="text">
                                                 Listen Now
                                             </v-btn>
-                                        </v-card-actions>
-                                    </v-card>
+                                        </v-card-actions> -->
+                                    <!-- </v-card> -->
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -32,15 +47,18 @@
                                         <v-col cols="12">
                                             <v-card color="#385F73" dark>
                                                 <v-card-title class="text-h5">
-                                                    Unlimited music now
+                                                    Join Our team
                                                 </v-card-title>
 
-                                                <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and
-                                                    offline.</v-card-subtitle>
+                                                <v-card-subtitle>If you can speak any indian language you are welcome.
+                                                    Lets Explore your talent.
+                                                    <tr>Work as Performer</tr>
+                                                    <tr>Work at Backstage</tr>
+                                                </v-card-subtitle>
 
                                                 <v-card-actions>
                                                     <v-btn text>
-                                                        Listen Now
+                                                        Login to Join
                                                     </v-btn>
                                                 </v-card-actions>
                                             </v-card>
@@ -55,20 +73,17 @@
                                                         <v-card-subtitle v-text="item.artist"></v-card-subtitle>
 
                                                         <v-card-actions>
-                                                            <v-btn v-if="item.artist === 'Ellie Goulding'" class="ml-2 mt-3" fab icon
-                                                                height="40px" right width="40px">
-                                                                <v-icon>mdi-play</v-icon>
-                                                            </v-btn>
+                                                            <!-- <v-btn v-if="item.whatapp !== 'undefined'">
+                                                                <tr><v-icon>mdi-whatsapp</v-icon>{{item.whatapp}}</tr></v-btn>
 
-                                                            <v-btn v-else class="ml-2 mt-5" outlined rounded small>
-                                                                START RADIO
-                                                            </v-btn>
+                                                            <tr><v-icon>mdi-instagram</v-icon>{{item.instagram}}</tr> -->
+
                                                         </v-card-actions>
                                                     </div>
 
-                                                    <v-avatar class="ma-3" size="125" tile>
+                                                    <!-- <v-avatar class="ma-3" size="125" tile>
                                                         <v-img :src="item.src"></v-img>
-                                                    </v-avatar>
+                                                    </v-avatar> -->
                                                 </div>
                                             </v-card>
                                         </v-col>
@@ -119,12 +134,18 @@ export default {
   setup () {
     const data = reactive({
       submit: '',
-      doclist: ''
+      doclist: '',
+      premierlist: ''
     })
 
     onMounted(async () => {
-      const querySnapshot = await getDocs(collection(db, 'projects'))
+      const qDoclist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
+      const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiere'))
+
+      const querySnapshot = await getDocs(qDoclist)
       data.doclist = querySnapshot.docs.map(doc => doc.data())
+      const queryPlist = await getDocs(qPremierlist)
+      data.premierlist = queryPlist.docs.map(doc => doc.data())
     })
 
     const submit = async () => {
@@ -156,14 +177,14 @@ export default {
       {
         color: '#1F7087',
         src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-        title: 'Supermodel',
-        artist: 'Foster the People'
+        title: 'Audition',
+        artist: 'Login For Audition(Work with us)'
       },
       {
         color: '#952175',
         src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-        title: 'Halcyon Days',
-        artist: 'Ellie Goulding'
+        title: 'Vishravas',
+        artist: '16 VistaCenter Salisbury Rd, Hounslow TW4 6JQ'
       }
     ]
 
