@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-parsing-error -->
 <template>
     <v-app id="app">
         <v-content>
@@ -140,7 +139,7 @@ export default {
 
     onMounted(async () => {
       const qDoclist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
-      const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiere'))
+      const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'premiering'))
 
       const querySnapshot = await getDocs(qDoclist)
       data.doclist = querySnapshot.docs.map(doc => doc.data())
