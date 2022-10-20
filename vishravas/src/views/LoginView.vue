@@ -139,7 +139,7 @@ export default {
 
     onMounted(async () => {
       const qDoclist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
-      const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'premiering'))
+      const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
 
       const querySnapshot = await getDocs(qDoclist)
       data.doclist = querySnapshot.docs.map(doc => doc.data())

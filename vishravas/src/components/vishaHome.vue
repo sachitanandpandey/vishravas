@@ -30,15 +30,19 @@
 
                             <v-row dense>
                                 <v-col cols="20">
-                                    <v-card max-width="100%" height="400">
-                                        <iframe src="https://player.vimeo.com/video/722602885?h=e89c587c8b" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                        <!-- <v-img :src=data.premierlist[0].fullposter class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                            height="300px" width="800px">
+                                    <v-container>
+                                    <v-card max-width="100%" height="400" v-if="data.premierlist[0].link">
+                                        <iframe :src=data.premierlist[0].link width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                                    </v-card>
+                                    <v-card max-width="100%" height="400" v-else>
+                                        <v-img :src=data.premierlist[0].fullposter class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                                            height="100%" width="100%">
                                         <v-row><v-col cols="20"><h1>{{data.premierlist[0].status}}</h1></v-col></v-row>
                                         <v-row><v-col cols="20">{{data.premierlist[0].desc}}</v-col></v-row>
-                                        </v-img> -->
-
+                                        <v-row></v-row>
+                                        </v-img>
                                     </v-card>
+                                    </v-container>
                                     <!-- <v-card color="#385F73" theme="dark" height="100%" width="800">
                                         <v-img :src=data.premierlist[0].fullposter class="white--text align-end"
                                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="10%" width="800">
@@ -112,7 +116,7 @@ export default {
 
     onMounted(async () => {
       const qDoclist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
-      const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'premiering'))
+      const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
 
       const querySnapshot = await getDocs(qDoclist)
       data.doclist = querySnapshot.docs.map(doc => doc.data())
@@ -149,4 +153,6 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+
+</style>
