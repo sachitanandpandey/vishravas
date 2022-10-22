@@ -18,21 +18,6 @@
                                         </v-img>
 
                                     </v-card>
-                                    <!-- <v-card color="#385F73" theme="dark" height="100%" width="800">
-                                        <v-img :src=data.premierlist[0].fullposter class="white--text align-end"
-                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="10%" width="800">
-                            </v-img> -->
-                                        <!-- <v-card-title class="text-h5">
-                                            {{data.premierlist}}
-                                        </v-card-title>
-                                        <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever,
-                                            online and offline.</v-card-subtitle>
-                                        <v-card-actions>
-                                            <v-btn variant="text">
-                                                Listen Now
-                                            </v-btn>
-                                        </v-card-actions> -->
-                                    <!-- </v-card> -->
                                 </v-col>
                             </v-row>
                         </v-container>

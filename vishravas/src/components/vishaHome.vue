@@ -27,7 +27,6 @@
                 <v-row>
                     <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center">
                         <v-container>
-
                             <v-row dense>
                                 <v-col cols="20">
                                     <v-container>
@@ -44,25 +43,70 @@
                                         </v-img>
                                     </v-card>
                                     </v-container>
-                                    <!-- <v-card color="#385F73" theme="dark" height="100%" width="800">
-                                        <v-img :src=data.premierlist[0].fullposter class="white--text align-end"
-                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="10%" width="800">
-                            </v-img> -->
-                                        <!-- <v-card-title class="text-h5">
-                                            {{data.premierlist}}
-                                        </v-card-title>
-                                        <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever,
-                                            online and offline.</v-card-subtitle>
-                                        <v-card-actions>
-                                            <v-btn variant="text">
-                                                Listen Now
-                                            </v-btn>
-                                        </v-card-actions> -->
-                                    <!-- </v-card> -->
                                 </v-col>
                             </v-row>
                         </v-container>
                     </v-card>
+                    <v-row>
+                        <template>
+                            <v-card max-width="400" class="mx-auto">
+
+                                <v-container>
+                                    <v-row dense>
+                                        <v-col cols="12">
+                                            <v-card color="#385F73" dark>
+                                                <v-img :src=data.audilist[0].audition class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                                            height="100%" width="100%">
+                                        <v-row><v-col cols="20"><h1>{{data.audilist[0].duration}}</h1></v-col></v-row>
+                                        <v-row><v-col cols="20">{{data.audilist[0].desc}}</v-col></v-row>
+                                        <v-row></v-row>
+                                        </v-img>
+                                                <!-- <v-card-title class="text-h5">
+                                                    Join Our team
+                                                </v-card-title>
+
+                                                <v-card-subtitle>If you can speak any indian language you are welcome.
+                                                    Lets Explore your talent.
+                                                    <tr>Work as Performer</tr>
+                                                    <tr>Work at Backstage</tr>
+                                                </v-card-subtitle>
+
+                                                <v-card-actions>
+                                                    <v-btn text>
+                                                        Login to Join
+                                                    </v-btn>
+                                                </v-card-actions> -->
+                                            </v-card>
+                                        </v-col>
+
+                                        <!-- <v-col v-for="(item, i) in noticelist" :key="i" cols="12">
+                                            <v-card :color="item.color" dark>
+                                                <div class="d-flex flex-no-wrap justify-space-between">
+                                                    <div>
+                                                        <v-card-title class="text-h5" v-text="item.title"></v-card-title>
+
+                                                        <v-card-subtitle v-text="item.artist"></v-card-subtitle>
+
+                                                        <v-card-actions>
+                                                            <v-btn v-if="item.whatapp !== 'undefined'">
+                                                                <tr><v-icon>mdi-whatsapp</v-icon>{{item.whatapp}}</tr></v-btn>
+
+                                                            <tr><v-icon>mdi-instagram</v-icon>{{item.instagram}}</tr>
+
+                                                        </v-card-actions>
+                                                    </div>
+
+                                                    <v-avatar class="ma-3" size="125" tile>
+                                                        <v-img :src="item.src"></v-img>
+                                                    </v-avatar>
+                                                </div>
+                                            </v-card>
+                                        </v-col> -->
+                                    </v-row>
+                                </v-container>
+                            </v-card>
+                        </template>
+                        </v-row>
                     <v-layout align-top justify-end>
                     <v-flex xs20 sm8 md4>
                         <v-row>
@@ -90,6 +134,7 @@
                                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="300px" width="200px" @click="pupdate(item)">
                             </v-img>
                         </v-card>
+
                     </div>
                 </v-row>
                 <v-row class="text-h5 white--text font-italic">Projected</v-row>
