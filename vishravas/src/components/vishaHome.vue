@@ -31,14 +31,15 @@
                             <v-row dense>
                                 <v-col cols="20">
                                     <v-container>
-                                    <v-card max-width="100%" height="400" v-if="data.premierlist[0].link">
-                                        <iframe :src=data.premierlist[0].link width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                                        <h1>{{data.display.title}}</h1>
+                                    <v-card max-width="100%" height="400" v-if="data.display.link">
+                                        <iframe :src=data.display.link width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                                     </v-card>
                                     <v-card max-width="100%" height="400" v-else>
-                                        <v-img :src=data.premierlist[0].fullposter class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                                        <v-img :src=data.display.fullposter class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                                             height="100%" width="100%">
-                                        <v-row><v-col cols="20"><h1>{{data.premierlist[0].status}}</h1></v-col></v-row>
-                                        <v-row><v-col cols="20">{{data.premierlist[0].desc}}</v-col></v-row>
+                                        <v-row><v-col cols="20"><h1>{{data.display.status}}</h1></v-col></v-row>
+                                        <v-row><v-col cols="20">{{data.display.desc}}</v-col></v-row>
                                         <v-row></v-row>
                                         </v-img>
                                     </v-card>
@@ -86,7 +87,7 @@
                     <div v-for="item in data.premierlist" v-bind:key="item.id" class="pa-md-2">
                         <v-card max-width="200" height="300">
                             <v-img :src=item.listposter class="white--text align-end"
-                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="300px" width="200px">
+                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="300px" width="200px" @click="pupdate(item)">
                             </v-img>
                         </v-card>
                     </div>
@@ -96,7 +97,7 @@
                     <div v-for="item in data.doclist" v-bind:key="item.id" class="pa-md-2">
                         <v-card max-width="200" height="300">
                             <v-img :src=item.listposter class="white--text align-end"
-                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="300px" width="200px">
+                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="300px" width="200px" @click="pupdate(item)">
                             </v-img>
                         </v-card>
                     </div>
@@ -120,18 +121,20 @@ export default {
     const data = reactive({
       submit: '',
       doclist: '',
-      premierlist: ''
+      premierlist: '',
+      display: ''
     })
     const auth = getAuth()
 
     onMounted(async () => {
-      const qDoclist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
+      const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
       const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
 
       const querySnapshot = await getDocs(qDoclist)
       data.doclist = querySnapshot.docs.map(doc => doc.data())
       const queryPlist = await getDocs(qPremierlist)
       data.premierlist = queryPlist.docs.map(doc => doc.data())
+      data.display = data.premierlist[0]
     })
 
     onAuthStateChanged(auth, (user) => {
@@ -155,9 +158,15 @@ export default {
       })
     }
 
+    const pupdate = async (item) => {
+      data.display = item
+      console.log(data.dispaly.title)
+    }
+
     return {
       data,
-      submit
+      submit,
+      pupdate
     }
   }
 }
