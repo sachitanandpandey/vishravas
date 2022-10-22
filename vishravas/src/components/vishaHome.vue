@@ -122,6 +122,7 @@ export default {
       submit: '',
       doclist: '',
       premierlist: '',
+      audilist: '',
       display: ''
     })
     const auth = getAuth()
@@ -129,12 +130,15 @@ export default {
     onMounted(async () => {
       const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
       const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
+      const qProgresslist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
 
       const querySnapshot = await getDocs(qDoclist)
       data.doclist = querySnapshot.docs.map(doc => doc.data())
       const queryPlist = await getDocs(qPremierlist)
       data.premierlist = queryPlist.docs.map(doc => doc.data())
       data.display = data.premierlist[0]
+      const queryFlist = await getDocs(qProgresslist)
+      data.audilist = queryFlist.docs.map(doc => doc.data())
     })
 
     onAuthStateChanged(auth, (user) => {
