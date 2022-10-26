@@ -56,7 +56,7 @@
                                         <v-col cols="12">
                                             <v-card color="#385F73" dark>
                                                 <v-img :src=data.audilist[0].audition class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                            height="100%" width="100%">
+                                            height="100%" width="100%" @click="audition()">
                                         <v-row><v-col cols="20"><h1>{{data.audilist[0].duration}}</h1></v-col></v-row>
                                         <v-row><v-col cols="20">{{data.audilist[0].desc}}</v-col></v-row>
                                         <v-row></v-row>
@@ -212,10 +212,15 @@ export default {
       console.log(data.dispaly.title)
     }
 
+    const audition = async () => {
+      router.push('/casting')
+    }
+
     return {
       data,
       submit,
-      pupdate
+      pupdate,
+      audition
     }
   }
 }

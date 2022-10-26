@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import castingHome from '../views/CastingView.vue'
+import profileHome from '../views/ProfileView.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +17,16 @@ const routes: Array<RouteConfig> = [
     path: '/home',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/casting',
+    name: 'casting',
+    component: castingHome
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: profileHome
   },
   {
     path: '/about',
