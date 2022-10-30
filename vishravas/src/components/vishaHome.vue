@@ -3,28 +3,7 @@
     <v-app id="app">
         <v-content>
             <v-container fluid fill-height>
-                <v-layout align-top justify-end>
-                    <v-flex xs20 sm8 md4>
-                        <v-row>
-                            <v-col xs="6" class="d-flex justify-end">
-                                <form @submit.prevent="submit">
-                                    <v-btn rounded color="primary" dark type="submit">
-                                        SignOut
-                                    </v-btn>
-                                </form>
-                            </v-col>
-                        </v-row>
-                    </v-flex>
-                </v-layout>
-            </v-container>
-        </v-content>
-    </v-app>
-</template>
-<template>
-    <v-app id="app">
-        <v-content>
-            <v-container fluid fill-height>
-                <v-row>
+                <v-row class="pa-md-6">
                     <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center">
                         <v-container>
                             <v-row dense>
@@ -61,47 +40,9 @@
                                         <v-row><v-col cols="20">{{data.audilist[0].desc}}</v-col></v-row>
                                         <v-row></v-row>
                                         </v-img>
-                                                <!-- <v-card-title class="text-h5">
-                                                    Join Our team
-                                                </v-card-title>
-
-                                                <v-card-subtitle>If you can speak any indian language you are welcome.
-                                                    Lets Explore your talent.
-                                                    <tr>Work as Performer</tr>
-                                                    <tr>Work at Backstage</tr>
-                                                </v-card-subtitle>
-
-                                                <v-card-actions>
-                                                    <v-btn text>
-                                                        Login to Join
-                                                    </v-btn>
-                                                </v-card-actions> -->
                                             </v-card>
                                         </v-col>
 
-                                        <!-- <v-col v-for="(item, i) in noticelist" :key="i" cols="12">
-                                            <v-card :color="item.color" dark>
-                                                <div class="d-flex flex-no-wrap justify-space-between">
-                                                    <div>
-                                                        <v-card-title class="text-h5" v-text="item.title"></v-card-title>
-
-                                                        <v-card-subtitle v-text="item.artist"></v-card-subtitle>
-
-                                                        <v-card-actions>
-                                                            <v-btn v-if="item.whatapp !== 'undefined'">
-                                                                <tr><v-icon>mdi-whatsapp</v-icon>{{item.whatapp}}</tr></v-btn>
-
-                                                            <tr><v-icon>mdi-instagram</v-icon>{{item.instagram}}</tr>
-
-                                                        </v-card-actions>
-                                                    </div>
-
-                                                    <v-avatar class="ma-3" size="125" tile>
-                                                        <v-img :src="item.src"></v-img>
-                                                    </v-avatar>
-                                                </div>
-                                            </v-card>
-                                        </v-col> -->
                                     </v-row>
                                 </v-container>
                             </v-card>

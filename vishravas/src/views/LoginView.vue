@@ -233,7 +233,7 @@ body {
     border-radius: 25px;
     border: 2px solid #609;
     padding: 20px;
-    width: 400px;
+    width: 100%;
     height: 15px;
 }
 
@@ -241,7 +241,31 @@ body {
     border-radius: 25px;
     border: 2px solid #609;
     padding: 20px;
-    width: 400px;
+    width: 500px;
+    height: 15px;
+}
+
+#ipname {
+    border-radius: 25px;
+    border: 2px solid #609;
+    padding: 20px;
+    width: 300px;
+    height: 15px;
+}
+
+#ipage {
+    border-radius: 25px;
+    border: 2px solid #609;
+    padding: 20px;
+    width: 300px;
+    height: 15px;
+}
+
+#ipaboutme {
+    border-radius: 25px;
+    border: 2px solid #609;
+    padding: 20px;
+    width: 100%;
     height: 15px;
 }
 
