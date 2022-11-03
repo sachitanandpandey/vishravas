@@ -10,7 +10,7 @@
                             <v-row dense>
                                 <v-col cols="20">
                                     <v-container>
-                                        <h1>Profile</h1>
+                                        <h1>Profile {{username}}</h1>
                                         <v-card max-width="100%" height="100%" class="mt-2 mb-2">
                                             <form @submit.prevent="submit">
                                                 <v-row>
@@ -77,7 +77,7 @@
                                                 </v-row>
                                             </form>
                                             <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark
-                                                @click="update()">
+                                                @click="update(useremail)">
                                                 Update
                                             </v-btn>
                                         </v-card>
@@ -109,6 +109,19 @@
                             </v-card>
                         </template>
                     </v-row>
+                        <v-layout align-top justify-end>
+                            <v-flex xs20 sm8 md4>
+                                <v-row>
+                                    <v-col xs="6" class="d-flex justify-end">
+                                            <v-btn rounded color="primary" dark @click="home()">
+                                                Home
+                                            </v-btn>
+                                    </v-col>
+                                </v-row>
+                            </v-flex>
+                        </v-layout>
+                </v-row>
+                <v-container>
                     <v-layout align-top justify-end>
                         <v-flex xs20 sm8 md4>
                             <v-row>
@@ -122,7 +135,7 @@
                             </v-row>
                         </v-flex>
                     </v-layout>
-                </v-row>
+                </v-container>
             </v-container>
 
         </v-content>
@@ -131,14 +144,14 @@
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, ref } from 'vue'
 import router from '../router'
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
 import { collection, addDoc, where, query, doc, setDoc, getDocs } from 'firebase/firestore'
 import { db } from '../main'
 
 export default {
-  name: 'vishHome',
+  name: 'ProfileWorld',
 
   setup () {
     const data = reactive({
@@ -150,13 +163,16 @@ export default {
     })
     const auth = getAuth()
 
+    let useremail = ref('')
+
     const GenderOptions = ['Male', 'Female']
     const weekendOptions = ['Yes', 'No']
 
-    // onMounted(async () => {
-    //   const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
-    //   const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
-    //   const qProgresslist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
+    onMounted(async () => {
+      useremail = auth.currentUser.email
+      //   const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
+      //   const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
+      //   const qProgresslist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
 
     //   const querySnapshot = await getDocs(qDoclist)
     //   data.doclist = querySnapshot.docs.map(doc => doc.data())
@@ -165,14 +181,13 @@ export default {
     //   data.display = data.premierlist[0]
     //   const queryFlist = await getDocs(qProgresslist)
     //   data.audilist = queryFlist.docs.map(doc => doc.data())
-    // })
+    })
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid
-        console.log(user.email)
         // ...
       } else {
         router.push('/')
@@ -193,16 +208,33 @@ export default {
       //   console.log(data.dispaly.title)
     }
 
-    const update = async () => {
+    const update = async (email) => {
       //   data.display = item
       console.log(data.name)
       console.log(data.age)
       console.log(data.aboutme)
+      console.log(email)
+      const colRef = collection(db, 'profile')
+
+      setDoc(doc(colRef, useremail), {
+        name: data.name,
+        age: data.age,
+        height: data.height,
+        aboutme: data.aboutme,
+        instagram: data.insta,
+        showreel: data.showreel,
+        language: data.language,
+        whatapp: data.whtapp,
+        location: data.location,
+        gender: data.gender,
+        weekend: data.weekend
+
+      })
     }
 
-    // const audition = async () => {
-    //   router.push('/casting')
-    // }
+    const home = async () => {
+      router.push('/home')
+    }
 
     return {
       data,
@@ -210,7 +242,10 @@ export default {
       replace,
       update,
       GenderOptions,
-      weekendOptions
+      weekendOptions,
+      home,
+      useremail
+    //   username
       //   pupdate,
       //   audition
     }

@@ -52,11 +52,11 @@
                     <v-flex xs20 sm8 md4>
                         <v-row>
                             <v-col xs="6" class="d-flex justify-end">
-                                <form @submit.prevent="submit">
-                                    <v-btn rounded color="primary" dark type="submit">
-                                        SignOut
+                                <!-- <form @submit.prevent="submit"> -->
+                                    <v-btn rounded color="primary" dark @click="profile()">
+                                        {{username}}
                                     </v-btn>
-                                </form>
+                                <!-- </form> -->
                             </v-col>
                         </v-row>
                     </v-flex>
@@ -90,11 +90,26 @@
                 </v-row>
         </v-container>
         </template>
+        <v-container>
+        <v-layout align-top justify-end>
+                    <v-flex xs20 sm8 md4>
+                        <v-row>
+                            <v-col xs="6" class="d-flex justify-end">
+                                <form @submit.prevent="submit">
+                                    <v-btn rounded color="primary" dark type="submit">
+                                        SignOut
+                                    </v-btn>
+                                </form>
+                            </v-col>
+                        </v-row>
+                    </v-flex>
+                </v-layout>
+            </v-container>
     </v-app>
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, ref } from 'vue'
 import router from '../router'
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
 import { collection, addDoc, where, query, doc, setDoc, getDocs } from 'firebase/firestore'
@@ -112,6 +127,9 @@ export default {
       display: ''
     })
     const auth = getAuth()
+
+    let username = ref('')
+    username = auth.currentUser.displayName
 
     onMounted(async () => {
       const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
@@ -150,7 +168,10 @@ export default {
 
     const pupdate = async (item) => {
       data.display = item
-      console.log(data.dispaly.title)
+    }
+
+    const profile = async () => {
+      router.push('/profile')
     }
 
     const audition = async () => {
@@ -161,7 +182,9 @@ export default {
       data,
       submit,
       pupdate,
-      audition
+      profile,
+      audition,
+      username
     }
   }
 }
