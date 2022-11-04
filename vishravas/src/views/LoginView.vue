@@ -123,7 +123,7 @@ export default {
     })
 
     onMounted(async () => {
-      const qDoclist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
+      const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
       const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
 
       const querySnapshot = await getDocs(qDoclist)
