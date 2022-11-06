@@ -10,7 +10,7 @@
                             <v-row dense>
                                 <v-col cols="20">
                                     <v-container>
-                                        <h1>Profile {{username}}</h1>
+                                        <h1>Profile</h1>
                                         <v-card max-width="100%" height="100%" class="mt-2 mb-2">
                                             <form @submit.prevent="submit">
                                                 <v-row>
@@ -38,7 +38,7 @@
                                                         <v-col class="d-flex" cols="12" sm="12">
                                                             <input v-model="data.insta" label='Instagram url'
                                                                 class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Instagram" required id="ip1">
+                                                                placeholder="Instagram" v-validate="required" id="ip1">
                                                         </v-col>
                                                         <v-col class="d-flex" cols="12" sm="12">
                                                             <input v-model="data.showreel" label='Showreel url'
@@ -77,7 +77,7 @@
                                                 </v-row>
                                             </form>
                                             <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark
-                                                @click="update(useremail)">
+                                                @click="update(data.useremail)">
                                                 Update
                                             </v-btn>
                                         </v-card>
@@ -93,15 +93,20 @@
                                     <v-row dense>
                                         <v-col cols="12">
                                             <v-card max-width="100%" height="100%">
-                                                <v-img src='../assets/default_profile.jpg' class="white--text align-end"
-                                                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%"
-                                                    width="100%">
-                                                    <v-card-actions>
-                                                        <v-btn rounded color="primary" dark @click="replace(item)">
-                                                            Edit
-                                                        </v-btn>
-                                                    </v-card-actions>
-                                                </v-img>
+                                                <form @submit.prevent="replace">
+                                                    <v-img :src='data.profileimg' class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                                                        height="100%" width="100%">
+
+                                                        <v-file-input v-model="data.profileimg" :rules="rules" accept="image/png, image/jpeg, image/bmp"
+                                                            placeholder="Image" prepend-icon="mdi-camera" label="Profile Image" color="white"
+                                                            @change="onFileChange(data.profileimg)"></v-file-input>
+                                                        <v-card-actions>
+                                                        </v-card-actions>
+                                                    </v-img>
+                                                </form>
+                                                <v-btn rounded color="primary" dark @click="replace(data.useremail)">
+                                                    Update
+                                                </v-btn>
                                             </v-card>
                                         </v-col>
                                     </v-row>
@@ -144,11 +149,12 @@
 </template>
 
 <script>
-import { reactive, onMounted, ref } from 'vue'
+import { reactive, onMounted } from 'vue'
 import router from '../router'
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
-import { collection, addDoc, where, query, doc, setDoc, getDocs } from 'firebase/firestore'
+import { collection, addDoc, where, query, doc, setDoc, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from '../main'
+import { getStorage, uploadBytesResumable, getDownloadURL, ref } from 'firebase/storage'
 
 export default {
   name: 'ProfileWorld',
@@ -160,16 +166,30 @@ export default {
       //   premierlist: '',
       //   audilist: '',
       //   display: ''
+      showreel: '',
+      useremail: '',
+      name: '',
+      age: '',
+      height: '',
+      aboutme: '',
+      instagram: '',
+      whtapp: '',
+      language: '',
+      location: '',
+      gender: '',
+      weekend: ''
     })
-    const auth = getAuth()
-
-    let useremail = ref('')
 
     const GenderOptions = ['Male', 'Female']
     const weekendOptions = ['Yes', 'No']
 
     onMounted(async () => {
-      useremail = auth.currentUser.email
+    //   useremail = getAuth().currentUser.email
+    //   auth = getAuth()
+      //   data.useremail = auth.currentUser.email
+    //   console.log('************************1')
+    //   console.log(useremail)
+    //   console.log('************************2')
       //   const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
       //   const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
       //   const qProgresslist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
@@ -182,12 +202,13 @@ export default {
     //   const queryFlist = await getDocs(qProgresslist)
     //   data.audilist = queryFlist.docs.map(doc => doc.data())
     })
-
+    const auth = getAuth()
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid
+        data.useremail = user.email
         // ...
       } else {
         router.push('/')
@@ -203,20 +224,57 @@ export default {
       })
     }
 
-    const replace = async () => {
-      //   data.display = item
-      //   console.log(data.dispaly.title)
+    function dataURLtoFile (dataurl, filename) {
+      const arr = dataurl.split(',')
+      const mime = arr[0].match(/:(.*?);/)[1]
+      const bstr = atob(arr[1])
+      let n = bstr.length
+      const u8arr = new Uint8Array(n)
+
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+
+      return new File([u8arr], filename, { type: mime })
     }
 
-    const update = async (email) => {
-      //   data.display = item
-      console.log(data.name)
-      console.log(data.age)
-      console.log(data.aboutme)
-      console.log(email)
+    const replace = async (useremail) => {
+      const profilefile = dataURLtoFile(data.profileimg, 'profileimg')
+      console.log(profilefile)
+      const storage = getStorage()
+
+      console.log(storage)
+
+      // Create the file metadata
+      /** @type {any} */
+      const metadata = {
+        contentType: 'image/jpeg'
+      }
+
+      const storageReflist = ref(storage, 'userprofile/' + useremail + '/' + profilefile.name)
+
+      const uploaddefaultprofile = await uploadBytesResumable(storageReflist, profilefile, metadata)
+      const defaultPosterUrl = await getDownloadURL(uploaddefaultprofile.ref)
+      console.log(defaultPosterUrl)
       const colRef = collection(db, 'profile')
 
-      setDoc(doc(colRef, useremail), {
+      updateDoc(doc(colRef, useremail), {
+        profileimg: defaultPosterUrl
+      })
+    }
+
+    const onFileChange = async (file) => {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        data.profileimg = e.target.result
+      }
+      reader.readAsDataURL(file)
+    }
+
+    const update = async (useremail) => {
+      const colRef = collection(db, 'profile')
+
+      updateDoc(doc(colRef, useremail), {
         name: data.name,
         age: data.age,
         height: data.height,
@@ -244,10 +302,7 @@ export default {
       GenderOptions,
       weekendOptions,
       home,
-      useremail
-    //   username
-      //   pupdate,
-      //   audition
+      onFileChange
     }
   }
 }

@@ -108,9 +108,9 @@
 <script>
 import { reactive, onMounted } from 'vue'
 import router from '../router'
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { getAuth, signInWithPopup, GoogleAuthProvider, fetchSignInMethodsForEmail } from 'firebase/auth'
 import { db } from '../main'
-import { collection, addDoc, where, query, doc, setDoc, getDocs } from 'firebase/firestore'
+import { collection, addDoc, where, query, doc, setDoc, getDocs, updateDoc } from 'firebase/firestore'
 
 export default {
   name: 'Login',
@@ -136,18 +136,21 @@ export default {
       const provider = new GoogleAuthProvider()
       const auth = getAuth()
       signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(async (result) => {
           // This gives you a Google Access Token. You can use it to access the Google API.
           const credential = GoogleAuthProvider.credentialFromResult(result)
           const token = credential.accessToken
           // The signed-in user info.
           const user = result.user
           const colRef = collection(db, 'profile')
-
-          setDoc(doc(colRef, user.email), {
-            email: user.email
-          })
-          console.log(user.email)
+          const qDoclist = query(colRef, where('email', '==', user.email))
+          const querySnapshot = await getDocs(qDoclist)
+          data.doclist = querySnapshot.docs.map(doc => doc.data())
+          if (data.doclist.length === 0) {
+            setDoc(doc(colRef, user.email), {
+              email: user.email
+            })
+          }
           router.push('/home')
         }).catch((error) => {
           // Handle Errors here.

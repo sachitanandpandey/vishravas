@@ -35,7 +35,7 @@
                                         <v-col cols="12">
                                             <v-card color="#385F73" dark>
                                                 <v-img :src=data.audilist[0].audition class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                            height="100%" width="100%" @click="audition()">
+                                            height="100%" width="100%" @click=audition()>
                                         <v-row><v-col cols="20"><h1>{{data.audilist[0].duration}}</h1></v-col></v-row>
                                         <v-row><v-col cols="20">{{data.audilist[0].desc}}</v-col></v-row>
                                         <v-row></v-row>
@@ -54,7 +54,7 @@
                             <v-col xs="6" class="d-flex justify-end">
                                 <!-- <form @submit.prevent="submit"> -->
                                     <v-btn rounded color="primary" dark @click="profile()">
-                                        {{username}}
+                                        {{data.username}}
                                     </v-btn>
                                 <!-- </form> -->
                             </v-col>
@@ -124,12 +124,13 @@ export default {
       doclist: '',
       premierlist: '',
       audilist: '',
-      display: ''
+      display: '',
+      username: ''
     })
     const auth = getAuth()
 
-    let username = ref('')
-    username = auth.currentUser.displayName
+    // let username = ref('')
+    // username = auth.currentUser.displayName
 
     onMounted(async () => {
       const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
@@ -151,6 +152,8 @@ export default {
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid
         console.log(user.email)
+        data.username = user.displayName
+        console.log(user.displayName)
         // ...
       } else {
         router.push('/')
@@ -183,8 +186,8 @@ export default {
       submit,
       pupdate,
       profile,
-      audition,
-      username
+      audition
+    //   username
     }
   }
 }
