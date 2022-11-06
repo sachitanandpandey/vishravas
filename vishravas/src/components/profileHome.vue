@@ -172,7 +172,7 @@ export default {
       age: '',
       height: '',
       aboutme: '',
-      instagram: '',
+      insta: '',
       whtapp: '',
       language: '',
       location: '',
@@ -287,6 +287,9 @@ export default {
         gender: data.gender,
         weekend: data.weekend
 
+      }).catch((error) => {
+        const errorMessage = error.message
+        console.log('some fields are mandatory')
       })
     }
 
