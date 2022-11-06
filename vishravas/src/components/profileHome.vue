@@ -12,7 +12,7 @@
                                     <v-container>
                                         <h1>Profile</h1>
                                         <v-card max-width="100%" height="100%" class="mt-2 mb-2">
-                                            <form @submit.prevent="submit">
+                                            <v-form  @submit.prevent="submit">
                                                 <v-row>
                                                     <v-col>
                                                         <v-col class="d-flex" cols="12" sm="12">
@@ -75,12 +75,18 @@
                                                         </v-col>
                                                     </v-col>
                                                 </v-row>
-                                            </form>
+                                            </v-form>
                                             <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark
                                                 @click="update(data.useremail)">
                                                 Update
                                             </v-btn>
                                         </v-card>
+                                        <v-snackbar v-model="data.snackbar" :timeout="-1" absolute left shaped top color="red accent-2">
+                                            <v-h5>{{data.infoerror}}</v-h5>
+                                            <template v-slot:action="{ attrs }">
+                                                <v-btn text v-bind="attrs" @click="data.snackbar = false"> Close </v-btn>
+                                            </template>
+                                        </v-snackbar>
                                     </v-container>
                                 </v-col>
                             </v-row>
@@ -177,21 +183,23 @@ export default {
       language: '',
       location: '',
       gender: '',
-      weekend: ''
+      weekend: '',
+      snackbar: false,
+      infoerror: ''
     })
 
     const GenderOptions = ['Male', 'Female']
     const weekendOptions = ['Yes', 'No']
 
+    const auth = getAuth()
+
     onMounted(async () => {
-    //   useremail = getAuth().currentUser.email
-    //   auth = getAuth()
-      //   data.useremail = auth.currentUser.email
-    //   console.log('************************1')
-    //   console.log(useremail)
-    //   console.log('************************2')
-      //   const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
-      //   const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
+      const auth = getAuth()
+      console.log('*************************')
+      console.log(data.useremail)
+      console.log('*************************')
+      const qConfigList = query(collection(db, 'config'))
+      const qUserProfile = query(collection(db, 'profile'), where('email', '==', data.useremail))
       //   const qProgresslist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
 
     //   const querySnapshot = await getDocs(qDoclist)
@@ -202,7 +210,7 @@ export default {
     //   const queryFlist = await getDocs(qProgresslist)
     //   data.audilist = queryFlist.docs.map(doc => doc.data())
     })
-    const auth = getAuth()
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
@@ -274,23 +282,25 @@ export default {
     const update = async (useremail) => {
       const colRef = collection(db, 'profile')
 
-      updateDoc(doc(colRef, useremail), {
-        name: data.name,
-        age: data.age,
-        height: data.height,
-        aboutme: data.aboutme,
-        instagram: data.insta,
-        showreel: data.showreel,
-        language: data.language,
-        whatapp: data.whtapp,
-        location: data.location,
-        gender: data.gender,
-        weekend: data.weekend
+      if (data.name === '' || data.age === '' || data.insta === '') {
+        data.infoerror = 'Please provide Name , Age and instagram url'
+        data.snackbar = true
+      } else {
+        updateDoc(doc(colRef, useremail), {
+          name: data.name,
+          age: data.age,
+          height: data.height,
+          aboutme: data.aboutme,
+          instagram: data.insta,
+          showreel: data.showreel,
+          language: data.language,
+          whatapp: data.whtapp,
+          location: data.location,
+          gender: data.gender,
+          weekend: data.weekend
 
-      }).catch((error) => {
-        const errorMessage = error.message
-        console.log('some fields are mandatory')
-      })
+        })
+      }
     }
 
     const home = async () => {
