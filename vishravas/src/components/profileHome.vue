@@ -155,12 +155,13 @@
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, computed } from 'vue'
 import router from '../router'
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
 import { collection, addDoc, where, query, doc, setDoc, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from '../main'
 import { getStorage, uploadBytesResumable, getDownloadURL, ref } from 'firebase/storage'
+import store from '@/store/index.ts'
 
 export default {
   name: 'ProfileWorld',
@@ -193,10 +194,14 @@ export default {
 
     const auth = getAuth()
 
+    const currentuser = computed(() => {
+      return store.getters.getUser
+    })
+
     onMounted(async () => {
       const auth = getAuth()
       console.log('*************************')
-      console.log(data.useremail)
+      console.log(currentuser.value)
       console.log('*************************')
       const qConfigList = query(collection(db, 'config'))
       const qUserProfile = query(collection(db, 'profile'), where('email', '==', data.useremail))

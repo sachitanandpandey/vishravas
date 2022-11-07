@@ -109,14 +109,16 @@
 </template>
 
 <script>
-import { reactive, onMounted, ref } from 'vue'
+import { reactive, onMounted, ref, computed } from 'vue'
 import router from '../router'
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
 import { collection, addDoc, where, query, doc, setDoc, getDocs } from 'firebase/firestore'
 import { db } from '../main'
+import store from '@/store/index.ts'
 
 export default {
   name: 'vishHome',
+  computed: { currentuser () { return this.$store.getters.getUser } },
 
   setup () {
     const data = reactive({
@@ -125,12 +127,10 @@ export default {
       premierlist: '',
       audilist: '',
       display: '',
-      username: ''
+      username: '',
+      currentuser: ''
     })
     const auth = getAuth()
-
-    // let username = ref('')
-    // username = auth.currentUser.displayName
 
     onMounted(async () => {
       const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
@@ -150,10 +150,8 @@ export default {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid
-        console.log(user.email)
         data.username = user.displayName
-        console.log(user.displayName)
+        store.commit('setUser', { value: user.email })
         // ...
       } else {
         router.push('/')
@@ -187,7 +185,6 @@ export default {
       pupdate,
       profile,
       audition
-    //   username
     }
   }
 }
