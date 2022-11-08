@@ -100,7 +100,7 @@
                                         <v-col cols="12">
                                             <v-card max-width="100%" height="100%">
                                                 <form @submit.prevent="replace">
-                                                    <v-img :src='data.profileimg' class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                                                    <v-img :src='data.doclist[0].profileimg' class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                                                         height="100%" width="100%">
 
                                                         <v-file-input v-model="data.profileimg" :rules="rules" accept="image/png, image/jpeg, image/bmp"
@@ -186,7 +186,9 @@ export default {
       gender: '',
       weekend: '',
       snackbar: false,
-      infoerror: ''
+      infoerror: '',
+      doclist: '',
+      editprofile: false
     })
 
     const GenderOptions = ['Male', 'Female']
@@ -203,12 +205,13 @@ export default {
       console.log('*************************')
       console.log(currentuser.value)
       console.log('*************************')
+      localStorage.getItem('vishuser')
       const qConfigList = query(collection(db, 'config'))
-      const qUserProfile = query(collection(db, 'profile'), where('email', '==', data.useremail))
+      const qUserProfile = query(collection(db, 'profile'), where('email', '==', localStorage.getItem('vishuser')))
       //   const qProgresslist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
 
-    //   const querySnapshot = await getDocs(qDoclist)
-    //   data.doclist = querySnapshot.docs.map(doc => doc.data())
+      const querySnapshot = await getDocs(qUserProfile)
+      data.doclist = querySnapshot.docs.map(doc => doc.data())
     //   const queryPlist = await getDocs(qPremierlist)
     //   data.premierlist = queryPlist.docs.map(doc => doc.data())
     //   data.display = data.premierlist[0]
@@ -252,7 +255,8 @@ export default {
     }
 
     const replace = async (useremail) => {
-      const profilefile = dataURLtoFile(data.profileimg, 'profileimg')
+    //   const profilefile = dataURLtoFile(data.profileimg, 'profileimg')
+      const profilefile = dataURLtoFile(data.doclist[0].profileimg, 'profileimg')
       console.log(profilefile)
       const storage = getStorage()
 
@@ -279,9 +283,14 @@ export default {
     const onFileChange = async (file) => {
       const reader = new FileReader()
       reader.onload = (e) => {
-        data.profileimg = e.target.result
+        // data.profileimg = e.target.result
+        data.doclist[0].profileimg = e.target.result
       }
       reader.readAsDataURL(file)
+    }
+
+    const editprofile = async () => {
+      data.editprofile = true
     }
 
     const update = async (useremail) => {
@@ -305,6 +314,7 @@ export default {
           weekend: data.weekend
 
         })
+        data.editprofile = false
       }
     }
 
@@ -320,7 +330,8 @@ export default {
       GenderOptions,
       weekendOptions,
       home,
-      onFileChange
+      onFileChange,
+      editprofile
     }
   }
 }

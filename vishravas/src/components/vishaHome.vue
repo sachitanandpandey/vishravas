@@ -152,6 +152,7 @@ export default {
         // https://firebase.google.com/docs/reference/js/firebase.User
         data.username = user.displayName
         store.commit('setUser', { value: user.email })
+        localStorage.setItem('vishuser', user.email)
         // ...
       } else {
         router.push('/')
