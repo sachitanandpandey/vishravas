@@ -12,74 +12,77 @@
                                     <v-container>
                                         <h1>Profile</h1>
                                         <v-card max-width="100%" height="100%" class="mt-2 mb-2">
-                                            <v-form  @submit.prevent="submit">
-                                                <v-row>
-                                                    <v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.name" label='Name'
-                                                                class="form-control mt-2 ml-2 mr-2" placeholder="Name"
-                                                                required id="ipname">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.age" type="number" defaut='0'
-                                                                label='Age' class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Age 00" required id="ipage">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.height" type="number" defaut='0'
-                                                                label='Height' class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Height Cm 00" required id="ipage">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <v-textarea v-model="data.aboutme" filled auto-grow
-                                                                label="Aboutme" rows="4" row-height="30" shaped
-                                                                class="form-control mt-2 ml-2 mr-2"></v-textarea>
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.insta" label='Instagram url'
-                                                                class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Instagram" v-validate="required" id="ip1">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.showreel" label='Showreel url'
-                                                                class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Showreel" id="ip1">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.whtapp" label='whatsapp'
-                                                                class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Whatsapp" id="ip1">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.language" label='Language'
-                                                                class="form-control mt-2 ml-2 mr-2 mb-1"
-                                                                placeholder="Hindi, Urdu, English, Gujrati, Marathi, Punjabi, Tamil, Telgu"
-                                                                required id="ip1">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.location" label='Location'
-                                                                class="form-control mt-2 ml-2 mr-2 mb-1"
-                                                                placeholder="Available in London , Reading, " required
-                                                                id="ip1">
-                                                        </v-col>
+                                            <span v-if="data.editprofile === true">
+                                                <v-form @submit.prevent="submit">
+                                                    <v-row>
+                                                        <v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.name" label='Name' class="form-control mt-2 ml-2 mr-2" placeholder="Name"
+                                                                    required id="ipname">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.age" type="number" defaut='0' label='Age' class="form-control mt-2 ml-2 mr-2"
+                                                                    placeholder="Age 00" required id="ipage">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.height" type="number" defaut='0' label='Height'
+                                                                    class="form-control mt-2 ml-2 mr-2" placeholder="Height Cm 00" required id="ipage">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <v-textarea v-model="data.aboutme" filled auto-grow label="Aboutme" rows="4" row-height="30" shaped
+                                                                    class="form-control mt-2 ml-2 mr-2"></v-textarea>
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.insta" label='Instagram url' class="form-control mt-2 ml-2 mr-2"
+                                                                    placeholder="Instagram" v-validate="required" id="ip1">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.showreel" label='Showreel url' class="form-control mt-2 ml-2 mr-2"
+                                                                    placeholder="Showreel" id="ip1">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.whtapp" label='whatsapp' class="form-control mt-2 ml-2 mr-2"
+                                                                    placeholder="Whatsapp" id="ip1">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.language" label='Language' class="form-control mt-2 ml-2 mr-2 mb-1"
+                                                                    placeholder="Hindi, Urdu, English, Gujrati, Marathi, Punjabi, Tamil, Telgu" required id="ip1">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.location" label='Location' class="form-control mt-2 ml-2 mr-2 mb-1"
+                                                                    placeholder="Available in London , Reading, " required id="ip1">
+                                                            </v-col>
 
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <v-select v-model="data.gender" :items="GenderOptions"
-                                                                label="Gender" solo>
-                                                            </v-select>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <v-select v-model="data.gender" :items="GenderOptions" label="Gender" solo>
+                                                                </v-select>
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <v-select v-model="data.weekend" :items="weekendOptions" label="Avaiable on Weekend" solo>
+                                                                </v-select>
+                                                            </v-col>
                                                         </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <v-select v-model="data.weekend" :items="weekendOptions"
-                                                                label="Avaiable on Weekend" solo>
-                                                            </v-select>
-                                                        </v-col>
-                                                    </v-col>
-                                                </v-row>
-                                            </v-form>
-                                            <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark
-                                                @click="update(data.useremail)">
-                                                Update
-                                            </v-btn>
+                                                    </v-row>
+                                                </v-form>
+                                                <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark @click="update(data.useremail)">
+                                                    Update
+                                                </v-btn>
+                                                <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark @click="cancelprofile()">
+                                                    Cancel
+                                                </v-btn>
+                                            </span>
+                                            <span v-if="data.editprofile === false">
+                                                <v-card>
+                                                    {{data.doclist[0].name}}
+                                                </v-card>
+                                                <v-card>
+                                                    {{data.doclist[0].age}}
+                                                </v-card>
+
+                                                <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark @click="editprofile()">
+                                                    Edit
+                                                </v-btn>
+                                            </span>
                                         </v-card>
                                         <v-snackbar v-model="data.snackbar" :timeout="-1" absolute left shaped top color="red accent-2">
                                             <v-h5>{{data.infoerror}}</v-h5>
@@ -293,6 +296,10 @@ export default {
       data.editprofile = true
     }
 
+    const cancelprofile = async () => {
+      data.editprofile = false
+    }
+
     const update = async (useremail) => {
       const colRef = collection(db, 'profile')
 
@@ -331,7 +338,8 @@ export default {
       weekendOptions,
       home,
       onFileChange,
-      editprofile
+      editprofile,
+      cancelprofile
     }
   }
 }
