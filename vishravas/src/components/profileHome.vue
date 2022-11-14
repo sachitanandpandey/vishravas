@@ -72,12 +72,99 @@
                                                 </v-btn>
                                             </span>
                                             <span v-if="data.editprofile === false">
-                                                <v-card>
+                                                <v-form @submit.prevent="submit">
+                                                    <v-row>
+                                                        <v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.name" label='Name' class="form-control mt-2 ml-2 mr-2" placeholder="Name"
+                                                                    required id="ipname">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.age" type="number" defaut='0' label='Age' class="form-control mt-2 ml-2 mr-2"
+                                                                    placeholder="Age 00" required id="ipage">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.height" type="number" defaut='0' label='Height'
+                                                                    class="form-control mt-2 ml-2 mr-2" placeholder="Height Cm 00" required id="ipage">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <v-textarea v-model="data.aboutme" filled auto-grow label="Aboutme" rows="4" row-height="30" shaped
+                                                                    class="form-control mt-2 ml-2 mr-2"></v-textarea>
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.insta" label='Instagram url' class="form-control mt-2 ml-2 mr-2"
+                                                                    placeholder="Instagram" v-validate="required" id="ip1">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.showreel" label='Showreel url' class="form-control mt-2 ml-2 mr-2"
+                                                                    placeholder="Showreel" id="ip1">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.whtapp" label='whatsapp' class="form-control mt-2 ml-2 mr-2"
+                                                                    placeholder="Whatsapp" id="ip1">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.language" label='Language' class="form-control mt-2 ml-2 mr-2 mb-1"
+                                                                    placeholder="Hindi, Urdu, English, Gujrati, Marathi, Punjabi, Tamil, Telgu" required id="ip1">
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <input v-model="data.location" label='Location' class="form-control mt-2 ml-2 mr-2 mb-1"
+                                                                    placeholder="Available in London , Reading, " required id="ip1">
+                                                            </v-col>
+
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <v-select v-model="data.gender" :items="GenderOptions" label="Gender" solo>
+                                                                </v-select>
+                                                            </v-col>
+                                                            <v-col class="d-flex" cols="12" sm="12">
+                                                                <v-select v-model="data.weekend" :items="weekendOptions" label="Avaiable on Weekend" solo>
+                                                                </v-select>
+                                                            </v-col>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-form>
+                                                <!-- <v-card>
+                                                    <v-avatar class="ma-3" size="70" tile>
+                                                        <v-img src="../assets/name.png"></v-img>
+                                                    </v-avatar>
                                                     {{data.doclist[0].name}}
                                                 </v-card>
                                                 <v-card>
+                                                    <v-avatar class="ma-3" size="70" tile>
+                                                        <v-img src="../assets/age.png"></v-img>
+                                                    </v-avatar>
                                                     {{data.doclist[0].age}}
                                                 </v-card>
+                                                <v-card>
+                                                    <v-avatar class="ma-3" size="70" tile>
+                                                        <v-img src="../assets/height.png"></v-img>
+                                                    </v-avatar>
+                                                    {{data.doclist[0].height}}
+                                                </v-card>
+                                                <v-card>
+                                                    <v-avatar class="ma-3" size="70" tile>
+                                                        <v-img src="../assets/desc.png"></v-img>
+                                                    </v-avatar>
+                                                    {{data.doclist[0].desc}}
+                                                </v-card>
+                                                <v-card>
+                                                    <v-avatar class="ma-3" size="70" tile>
+                                                        <v-img src="../assets/insta.png"></v-img>
+                                                    </v-avatar>
+                                                    {{data.doclist[0].insta}}
+                                                </v-card>
+                                                <v-card>
+                                                    <v-avatar class="ma-3" size="70" tile>
+                                                        <v-img src="../assets/phone.png"></v-img>
+                                                    </v-avatar>
+                                                    {{data.doclist[0].whtapp}}
+                                                </v-card>
+                                                <v-card>
+                                                    <v-avatar class="ma-3" size="70" tile>
+                                                        <v-img src="../assets/reel.png"></v-img>
+                                                    </v-avatar>
+                                                    {{data.doclist[0].showreel}}
+                                                </v-card> -->
 
                                                 <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark @click="editprofile()">
                                                     Edit
@@ -96,32 +183,34 @@
                         </v-container>
                     </v-card>
                     <v-row>
-                        <template>
-                            <v-card max-width="400" max-height="630px" class="mx-auto">
-                                <v-container>
-                                    <v-row dense>
-                                        <v-col cols="12">
-                                            <v-card max-width="100%" height="100%">
-                                                <form @submit.prevent="replace">
-                                                    <v-img :src='data.doclist[0].profileimg' class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                                        height="100%" width="100%">
-
-                                                        <v-file-input v-model="data.profileimg" :rules="rules" accept="image/png, image/jpeg, image/bmp"
-                                                            placeholder="Image" prepend-icon="mdi-camera" label="Profile Image" color="white"
-                                                            @change="onFileChange(data.profileimg)"></v-file-input>
-                                                        <v-card-actions>
-                                                        </v-card-actions>
-                                                    </v-img>
-                                                </form>
-                                                <v-btn rounded color="primary" dark @click="replace(data.useremail)">
-                                                    Update
-                                                </v-btn>
-                                            </v-card>
-                                        </v-col>
-                                    </v-row>
-                                </v-container>
-                            </v-card>
-                        </template>
+                        <v-container>
+                            <template>
+                                <v-card max-width="400" max-height="800px" class="mx-auto">
+                                    <v-container>
+                                        <v-row dense>
+                                            <v-col cols="12">
+                                                <v-card max-width="100%" height="100%">
+                                                    <form @submit.prevent="replace">
+                                                        <v-img :src='data.doclist[0].profileimg' class="white--text align-end"
+                                                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%">
+                                                            <v-file-input v-model="data.profileimg" :rules="rules"
+                                                                accept="image/png, image/jpeg, image/bmp" placeholder="Image"
+                                                                prepend-icon="mdi-camera" label="Profile Image" dark color="white"
+                                                                @change="onFileChange(data.profileimg)"></v-file-input>
+                                                            <v-card-actions>
+                                                            </v-card-actions>
+                                                        </v-img>
+                                                    </form>
+                                                </v-card>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                    <v-btn rounded color="primary" class="mt-2 mb-2" dark @click="replace(data.useremail)">
+                                        Update
+                                    </v-btn>
+                                </v-card>
+                            </template>
+                        </v-container>
                     </v-row>
                         <v-layout align-top justify-end>
                             <v-flex xs20 sm8 md4>
@@ -205,9 +294,6 @@ export default {
 
     onMounted(async () => {
       const auth = getAuth()
-      console.log('*************************')
-      console.log(currentuser.value)
-      console.log('*************************')
       localStorage.getItem('vishuser')
       const qConfigList = query(collection(db, 'config'))
       const qUserProfile = query(collection(db, 'profile'), where('email', '==', localStorage.getItem('vishuser')))
@@ -215,6 +301,17 @@ export default {
 
       const querySnapshot = await getDocs(qUserProfile)
       data.doclist = querySnapshot.docs.map(doc => doc.data())
+      data.name = data.doclist[0].name
+      data.age = data.doclist[0].age
+      data.height = data.doclist[0].height
+      data.aboutme = data.doclist[0].aboutme
+      data.insta = data.doclist[0].instagram
+      data.showreel = data.doclist[0].showreel
+      data.language = data.doclist[0].language
+      data.whtapp = data.doclist[0].whatapp
+      data.location = data.doclist[0].location
+      data.gender = data.doclist[0].gender
+      data.weekend = data.doclist[0].weekend
     //   const queryPlist = await getDocs(qPremierlist)
     //   data.premierlist = queryPlist.docs.map(doc => doc.data())
     //   data.display = data.premierlist[0]
@@ -260,10 +357,7 @@ export default {
     const replace = async (useremail) => {
     //   const profilefile = dataURLtoFile(data.profileimg, 'profileimg')
       const profilefile = dataURLtoFile(data.doclist[0].profileimg, 'profileimg')
-      console.log(profilefile)
       const storage = getStorage()
-
-      console.log(storage)
 
       // Create the file metadata
       /** @type {any} */
@@ -275,7 +369,6 @@ export default {
 
       const uploaddefaultprofile = await uploadBytesResumable(storageReflist, profilefile, metadata)
       const defaultPosterUrl = await getDownloadURL(uploaddefaultprofile.ref)
-      console.log(defaultPosterUrl)
       const colRef = collection(db, 'profile')
 
       updateDoc(doc(colRef, useremail), {
