@@ -31,138 +31,49 @@ export default Vue.extend({
                         <v-row dense>
                           <v-col cols="12">
                             <v-card color="#385F73" dark>
-                              <div v-for="item in data.doclist[0].casting" v-bind:key="item.id">
-                                <v-card color="" class="mt-2 ml-2 mr-2 mb-4">
-                                  <v-row>
-                                    <v-col>
-                                      <v-col class="d-flex" cols="12" sm="12">
-                                        <v-row>
-                                          <v-col>
-                                            <v-col class="d-flex" cols="12" sm="12">
-                                              {{item.name}}
-                                            </v-col>
-                                            <v-col class="d-flex" cols="12" sm="12">
-                                              {{item.age}}
-                                            </v-col>
-                                            <v-col class="d-flex" cols="12" sm="12">
-                                              {{item.description}}
-                                            </v-col>
-                                            <v-col class="d-flex" cols="12" sm="12">
-                                              {{item.ethnicity}}
-                                            </v-col>
-                                          </v-col>
-                                        </v-row>
+                              <div v-for="cast in data.doclist[0].casting" v-bind:key="cast.id">
 
-                                        <v-card-actions>
-                                          <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4 d-flex justify-end" dark @click="update()">
-                                            Apply
-                                          </v-btn>
-                                        </v-card-actions>
-                                      </v-col>
-                                    </v-col>
-                                  </v-row>
-                                </v-card>
+                                <v-chip> <v-chip class="ma-2" color="pink" label text-color="white">
+                                    <v-chip class="ma-2"><v-h4 class="ma-2">{{cast.name}}</v-h4></v-chip>
+                                    <v-chip class="ma-2"><v-h4 class="ma-2">Age: </v-h4>{{cast.age}}</v-chip>
+                                    <v-chip class="ma-2"><v-h4 class="ma-2">Gender: </v-h4>{{cast.gender}}</v-chip>
+                                    <v-chip class="ma-2"><v-h4 class="ma-2">Ethnicity: </v-h4>{{cast.ethnicity}}</v-chip>
+                                    <v-btn color="#385F73" @click=showdetails(cast)>ShowMore</v-btn>
+                                  </v-chip></v-chip>
+
                               </div>
-
-                            </v-card>
-                          </v-col>
-
-                          <v-col v-for="(item, i) in items" :key="i" cols="12">
-                            <v-card :color="item.color" dark>
-                              <div class="d-flex flex-no-wrap justify-space-between">
-                                <div>
-                                  <v-card-title class="text-h5" v-text="item.title"></v-card-title>
-
-                                  <v-card-subtitle v-text="item.artist"></v-card-subtitle>
-
-                                  <v-card-actions>
-                                    <v-btn v-if="item.artist === 'Ellie Goulding'" class="ml-2 mt-3" fab icon
-                                      height="40px" right width="40px">
-                                      <v-icon>mdi-play</v-icon>
+                              <div v-if="data.dialog===true">
+                                <v-row>
+                                  <v-col>
+                                    <v-col class="d-flex" cols="12" sm="12">
+                                      {{data.showdetails.name}}
+                                    </v-col>
+                                    <v-col class="d-flex" cols="12" sm="12">
+                                      {{data.showdetails.description}}
+                                    </v-col>
+                                    <v-col class="d-flex" cols="12" sm="12">
+                                      {{data.showdetails.age}}
+                                    </v-col>
+                                    <v-col class="d-flex" cols="12" sm="12">
+                                      {{data.showdetails.gender}}
+                                    </v-col>
+                                    <v-col class="d-flex" cols="12" sm="12">
+                                      {{data.showdetails.ethnicity}}
+                                    </v-col>
+                                    <v-col class="d-flex justify-end" cols="12" sm="12" @click=apply(data.showdetails)>
+                                      <v-btn>
+                                      Apply
                                     </v-btn>
-
-                                    <v-btn v-else class="ml-2 mt-5" outlined rounded small>
-                                      START RADIO
-                                    </v-btn>
-                                  </v-card-actions>
-                                </div>
-
-                                <v-avatar class="ma-3" size="125" tile>
-                                  <v-img :src="item.src"></v-img>
-                                </v-avatar>
+                                    </v-col>
+                                  </v-col>
+                                </v-row>
+                                <v-btn color="#385F73" @click=close()>Close</v-btn>
                               </div>
                             </v-card>
                           </v-col>
                         </v-row>
                       </v-container>
-                      <!-- <form @submit.prevent="submit">
-                                                <v-row>
-                                                    <v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.name" label='Name'
-                                                                class="form-control mt-2 ml-2 mr-2" placeholder="Name"
-                                                                required id="ipname">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.age" type="number" defaut='0'
-                                                                label='Age' class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Age 00" required id="ipage">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.height" type="number" defaut='0'
-                                                                label='Height' class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Height Cm 00" required id="ipage">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <v-textarea v-model="data.aboutme" filled auto-grow
-                                                                label="Aboutme" rows="4" row-height="30" shaped
-                                                                class="form-control mt-2 ml-2 mr-2"></v-textarea>
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.insta" label='Instagram url'
-                                                                class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Instagram" required id="ip1">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.showreel" label='Showreel url'
-                                                                class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Showreel" id="ip1">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.whtapp" label='whatsapp'
-                                                                class="form-control mt-2 ml-2 mr-2"
-                                                                placeholder="Whatsapp" id="ip1">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.language" label='Language'
-                                                                class="form-control mt-2 ml-2 mr-2 mb-1"
-                                                                placeholder="Hindi, Urdu, English, Gujrati, Marathi, Punjabi, Tamil, Telgu"
-                                                                required id="ip1">
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <input v-model="data.location" label='Location'
-                                                                class="form-control mt-2 ml-2 mr-2 mb-1"
-                                                                placeholder="Available in London , Reading, " required
-                                                                id="ip1">
-                                                        </v-col>
 
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <v-select v-model="data.gender" :items="GenderOptions"
-                                                                label="Gender" solo>
-                                                            </v-select>
-                                                        </v-col>
-                                                        <v-col class="d-flex" cols="12" sm="12">
-                                                            <v-select v-model="data.weekend" :items="weekendOptions"
-                                                                label="Avaiable on Weekend" solo>
-                                                            </v-select>
-                                                        </v-col>
-                                                    </v-col>
-                                                </v-row>
-                                            </form>
-                                            <v-btn rounded color="primary" class="mt-2 ml-2 mr-2 mb-4" dark
-                                                @click="update()">
-                                                Update
-                                            </v-btn> -->
                     </v-card>
                   </v-container>
                 </v-col>
@@ -234,7 +145,7 @@ export default Vue.extend({
 import { reactive, onMounted } from 'vue'
 import router from '../router'
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
-import { collection, addDoc, where, query, doc, setDoc, getDocs } from 'firebase/firestore'
+import { collection, addDoc, where, query, doc, setDoc, updateDoc, getDocs } from 'firebase/firestore'
 import { db } from '../main'
 
 export default {
@@ -242,11 +153,9 @@ export default {
 
   setup () {
     const data = reactive({
-      //   submit: '',
-      doclist: ''
-      //   premierlist: '',
-      //   audilist: '',
-      //   display: ''
+      id: '',
+      doclist: '',
+      dialog: false
     })
     const auth = getAuth()
 
@@ -255,12 +164,12 @@ export default {
 
     onMounted(async () => {
       const qDoclist = query(collection(db, 'casting'), where('status', '==', 'open'))
-      //   const qPremierlist = query(collection(db, 'projects'), where('status', '==', 'Premiering'))
-      //   const qProgresslist = query(collection(db, 'projects'), where('status', '==', 'InProgress'))
 
       const querySnapshot = await getDocs(qDoclist)
       data.doclist = querySnapshot.docs.map(doc => doc.data())
-      console.log(data.doclist[0])
+      data.id = querySnapshot.docs.map(doc => doc.id)
+      console.log(data.doclist)
+      console.log(data.id)
       //   const queryPlist = await getDocs(qPremierlist)
       //   data.premierlist = queryPlist.docs.map(doc => doc.data())
       //   data.display = data.premierlist[0]
@@ -294,11 +203,42 @@ export default {
       //   console.log(data.dispaly.title)
     }
 
-    const update = async () => {
-      //   data.display = item
-      console.log(data.name)
-      console.log(data.age)
-      console.log(data.aboutme)
+    const showdetails = async (item) => {
+      if (data.dialog === true) {
+        data.dialog = false
+      }
+      data.dialog = true
+      data.showdetails = item
+      console.log(item)
+      console.log(data.dialog)
+    }
+
+    const close = async () => {
+      data.dialog = false
+      data.showdetails = ''
+    }
+
+    const apply = async (item) => {
+      const email = localStorage.getItem('vishuser')
+      console.log(email)
+      console.log(data.id[0])
+      console.log(item.name)
+      const alovelaceDocumentRef = doc(db, 'profile', email)
+      const colRef = collection(db, 'applicants')
+      const uniqueid = email + '_' + item.name + '_' + data.id[0]
+      // const post = {
+      //   role: item.name,
+      //   applicant: db.doc('profile/' + email)
+      // }
+      console.log(alovelaceDocumentRef)
+
+      setDoc(doc(colRef, uniqueid), {
+        project: data.id[0],
+        role: item.name,
+        applicant: doc(db, 'profile', email)
+        // applicant: db.doc('profile/' + email)
+
+      })
     }
 
     const home = async () => {
@@ -308,7 +248,10 @@ export default {
     return {
       data,
       home,
-      submit
+      submit,
+      showdetails,
+      close,
+      apply
     }
   }
 }
