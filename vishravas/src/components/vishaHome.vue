@@ -4,16 +4,46 @@
         <v-content>
             <v-container fluid fill-height>
                 <v-row class="pa-md-6">
-                    <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center">
+                    <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center"  v-if="data.display.link">
                         <v-container>
                             <v-row dense>
                                 <v-col cols="20">
                                     <v-container>
                                         <h1>{{data.display.title}}</h1>
-                                    <v-card max-width="100%" height="400" v-if="data.display.link">
-                                        <iframe :src=data.display.link width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                    </v-card>
-                                    <v-card max-width="100%" height="400" v-else>
+                                    <div v-if="data.promo">
+                                        <v-card max-width="100%" height="400">
+                                            <iframe :src=data.display.link width="100%" height="100%" frameborder="0"
+                                                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                                        </v-card>
+                                    </div>
+                                    <div v-else>
+                                        <v-card max-width="100%" height="400">
+                                            <v-img :src=data.display.fullposter class="white--text align-end"
+                                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%">
+                                                <v-row><v-col cols="20">
+                                                        <h1>{{data.display.status}}</h1>
+                                                    </v-col></v-row>
+                                                <v-row><v-col cols="20">{{data.display.desc}}</v-col></v-row>
+                                                <v-row></v-row>
+                                            </v-img>
+                                        </v-card>
+                                    </div>
+
+                                    </v-container>
+                                    <v-btn @click=trailer()>Promo</v-btn>
+                                    <v-btn @click=buyticket(data.display)>Buyticket</v-btn>
+                                    <v-btn @click=fullength()>Film</v-btn>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-card>
+                    <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center"  v-else>
+                        <v-container>
+                            <v-row dense>
+                                <v-col cols="20">
+                                    <v-container>
+                                        <h1>{{data.display.title}}</h1>
+                                    <v-card max-width="100%" height="400">
                                         <v-img :src=data.display.fullposter class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                                             height="100%" width="100%">
                                         <v-row><v-col cols="20"><h1>{{data.display.status}}</h1></v-col></v-row>
@@ -128,9 +158,13 @@ export default {
       audilist: '',
       display: '',
       username: '',
-      currentuser: ''
+      currentuser: '',
+      promo: true
+
     })
     const auth = getAuth()
+
+    // let promo = ref(false)
 
     onMounted(async () => {
       const qDoclist = query(collection(db, 'projects'), where('status', '==', 'Projected'))
@@ -180,12 +214,27 @@ export default {
       router.push('/casting')
     }
 
+    const trailer = async () => {
+      data.promo = true
+    }
+
+    const fullength = async () => {
+      data.promo = false
+    }
+
+    const buyticket = async (item) => {
+      console.log(item)
+    }
+
     return {
       data,
       submit,
       pupdate,
       profile,
-      audition
+      audition,
+      trailer,
+      fullength,
+      buyticket
     }
   }
 }
