@@ -270,7 +270,7 @@ export default {
       const uniqueid = localStorage.getItem('vishuser') + '_' + item.title
       setDoc(doc(colRef, uniqueid), {
         project: item.title,
-        email: doc(db, 'profile', localStorage.getItem('vishuser'))
+        email: localStorage.getItem('vishuser')
 
       })
       data.projectpaid = true
