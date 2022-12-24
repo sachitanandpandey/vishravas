@@ -4,93 +4,130 @@
         <v-content>
             <v-container fluid fill-height>
                 <v-row class="pa-md-6">
-                    <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center"  v-if="data.display.link">
-                        <v-container>
-                            <v-row dense>
-                                <v-col cols="20">
-                                    <v-container>
-                                        <h1>{{data.display.title}}</h1>
-                                    <div v-if="data.promo">
-                                        <v-card max-width="100%" height="400">
-                                            <iframe :src=data.display.link width="100%" height="100%" frameborder="0"
-                                                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                                        </v-card>
-                                    </div>
-                                    <div v-else>
-                                        <v-card max-width="100%" height="400">
-                                            <v-img :src=data.display.fullposter class="white--text align-end"
-                                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%">
-                                                <v-row><v-col cols="20">
-                                                        <h1>{{data.display.status}}</h1>
-                                                    </v-col></v-row>
-                                                <v-row><v-col cols="20">{{data.display.desc}}</v-col></v-row>
-                                                <v-row></v-row>
-                                            </v-img>
-                                        </v-card>
-                                    </div>
-
-                                    </v-container>
-                                    <v-btn @click=trailer()>Promo</v-btn>
-                                    <v-btn @click=buyticket(data.display)>Buyticket</v-btn>
-                                    <v-btn @click=fullength()>Film</v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-card>
-                    <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center"  v-else>
-                        <v-container>
-                            <v-row dense>
-                                <v-col cols="20">
-                                    <v-container>
-                                        <h1>{{data.display.title}}</h1>
-                                    <v-card max-width="100%" height="400">
-                                        <v-img :src=data.display.fullposter class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                            height="100%" width="100%">
-                                        <v-row><v-col cols="20"><h1>{{data.display.status}}</h1></v-col></v-row>
-                                        <v-row><v-col cols="20">{{data.display.desc}}</v-col></v-row>
-                                        <v-row></v-row>
-                                        </v-img>
-                                    </v-card>
-                                    </v-container>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-card>
-                    <v-row>
-                        <template>
-                            <v-card max-width="400" class="mx-auto">
-
-                                <v-container>
+                        <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center" v-if="data.display.link">
+                                <v-container v-if="data.projectpaid == false">
                                     <v-row dense>
-                                        <v-col cols="12">
-                                            <v-card color="#385F73" dark>
-                                                <v-img :src=data.audilist[0].audition class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                            height="100%" width="100%" @click=audition()>
-                                        <v-row><v-col cols="20"><h1>{{data.audilist[0].duration}}</h1></v-col></v-row>
-                                        <v-row><v-col cols="20">{{data.audilist[0].desc}}</v-col></v-row>
-                                        <v-row></v-row>
-                                        </v-img>
-                                            </v-card>
-                                        </v-col>
+                                        <v-col cols="20">
+                                            <v-container>
+                                                <h1>{{data.display.title}}</h1>
+                                                <div v-if="data.promo">
+                                                    <v-card max-width="100%" height="400">
+                                                        <iframe :src=data.display.link width="100%" height="100%" frameborder="0"
+                                                            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                                                    </v-card>
+                                                </div>
+                                                <div v-else>
+                                                    <v-card max-width="100%" height="400">
+                                                        <v-img :src=data.display.fullposter class="white--text align-end"
+                                                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%">
+                                                            <v-row><v-col cols="20">
+                                                                    <h1>{{data.display.status}}</h1>
+                                                                </v-col></v-row>
+                                                            <v-row><v-col cols="20">{{data.display.desc}}</v-col></v-row>
+                                                            <v-row></v-row>
+                                                        </v-img>
+                                                    </v-card>
+                                                </div>
 
+                                            </v-container>
+                                            <v-btn @click=trailer()>Promo</v-btn>
+                                            <v-btn @click=buyticket(data.display)>Buyticket</v-btn>
+                                            <!-- <v-btn @click=fullength()>Film</v-btn> -->
+                                        </v-col>
                                     </v-row>
                                 </v-container>
-                            </v-card>
-                        </template>
-                        </v-row>
-                    <v-layout align-top justify-end>
-                    <v-flex xs20 sm8 md4>
+                                <v-container v-else>
+                                    <v-row dense>
+                                        <v-col cols="20">
+                                            <v-container>
+                                                <h1>{{data.display.title}}</h1>
+                                                <div v-if="data.promo">
+                                                    <v-card max-width="100%" height="400">
+                                                        <iframe :src=data.display.link width="100%" height="100%" frameborder="0"
+                                                            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                                                    </v-card>
+                                                </div>
+                                                <div v-else>
+                                                    <v-card max-width="100%" height="400">
+                                                        <v-img :src=data.display.fullposter class="white--text align-end"
+                                                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%">
+                                                            <v-row><v-col cols="20">
+                                                                    <h1>{{data.display.status}}</h1>
+                                                                </v-col></v-row>
+                                                            <v-row><v-col cols="20">{{data.display.desc}}</v-col></v-row>
+                                                            <v-row></v-row>
+                                                        </v-img>
+                                                    </v-card>
+                                                </div>
+
+                                            </v-container>
+                                            <v-btn @click=fullength()>Film</v-btn>
+                                            <v-btn @click=trailer()>Promo</v-btn>
+
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                        </v-card>
+                        <v-card max-width="100%" height="100%" class="d-flex justify-space-around mb-6 center" v-else>
+                            <v-container>
+                                <v-row dense>
+                                    <v-col cols="20">
+                                        <v-container>
+                                            <h1>{{data.display.title}}</h1>
+                                            <v-card max-width="100%" height="400">
+                                                <v-img :src=data.display.fullposter class="white--text align-end"
+                                                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%">
+                                                    <v-row><v-col cols="20">
+                                                            <h1>{{data.display.status}}</h1>
+                                                        </v-col></v-row>
+                                                    <v-row><v-col cols="20">{{data.display.desc}}</v-col></v-row>
+                                                    <v-row></v-row>
+                                                </v-img>
+                                            </v-card>
+                                        </v-container>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                        </v-card>
                         <v-row>
-                            <v-col xs="6" class="d-flex justify-end">
-                                <!-- <form @submit.prevent="submit"> -->
-                                    <v-btn rounded color="primary" dark @click="profile()">
-                                        {{data.username}}
-                                    </v-btn>
-                                <!-- </form> -->
-                            </v-col>
+                            <template>
+                                <v-card max-width="400" class="mx-auto">
+
+                                    <v-container>
+                                        <v-row dense>
+                                            <v-col cols="12">
+                                                <v-card color="#385F73" dark>
+                                                    <v-img :src=data.audilist[0].audition class="white--text align-end"
+                                                        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%"
+                                                        @click=audition()>
+                                                        <v-row><v-col cols="20">
+                                                                <h1>{{data.audilist[0].duration}}</h1>
+                                                            </v-col></v-row>
+                                                        <v-row><v-col cols="20">{{data.audilist[0].desc}}</v-col></v-row>
+                                                        <v-row></v-row>
+                                                    </v-img>
+                                                </v-card>
+                                            </v-col>
+
+                                        </v-row>
+                                    </v-container>
+                                </v-card>
+                            </template>
                         </v-row>
-                    </v-flex>
-                </v-layout>
+                        <v-layout align-top justify-end>
+                            <v-flex xs20 sm8 md4>
+                                <v-row>
+                                    <v-col xs="6" class="d-flex justify-end">
+                                        <!-- <form @submit.prevent="submit"> -->
+                                        <v-btn rounded color="primary" dark @click="profile()">
+                                            {{data.username}}
+                                        </v-btn>
+                                        <!-- </form> -->
+                                    </v-col>
+                                </v-row>
+                            </v-flex>
+
+                        </v-layout>
                 </v-row>
             </v-container>
 
@@ -142,7 +179,7 @@
 import { reactive, onMounted, ref, computed } from 'vue'
 import router from '../router'
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
-import { collection, addDoc, where, query, doc, setDoc, getDocs } from 'firebase/firestore'
+import { collection, addDoc, where, and, query, doc, setDoc, getDoc, getDocs } from 'firebase/firestore'
 import { db } from '../main'
 import store from '@/store/index.ts'
 
@@ -159,7 +196,8 @@ export default {
       display: '',
       username: '',
       currentuser: '',
-      promo: true
+      promo: true,
+      projectpaid: false
 
     })
     const auth = getAuth()
@@ -178,6 +216,10 @@ export default {
       data.display = data.premierlist[0]
       const queryFlist = await getDocs(qProgresslist)
       data.audilist = queryFlist.docs.map(doc => doc.data())
+      const qOrderlist = query(collection(db, 'vishorder'), where('email', '==', localStorage.getItem('vishuser')), where('project', '==', data.display.title))
+      const orderSnap = await getDocs(qOrderlist)
+      console.log(orderSnap.docs.map(doc => doc.data()))
+      if (orderSnap.docs.map(doc => doc.data()).length !== 0) { data.projectpaid = true } else { data.projectpaid = false }
     })
 
     onAuthStateChanged(auth, (user) => {
@@ -218,12 +260,20 @@ export default {
       data.promo = true
     }
 
-    const fullength = async () => {
+    const fullength = async (item) => {
       data.promo = false
     }
 
     const buyticket = async (item) => {
       console.log(item)
+      const colRef = collection(db, 'vishorder')
+      const uniqueid = localStorage.getItem('vishuser') + '_' + item.title
+      setDoc(doc(colRef, uniqueid), {
+        project: item.title,
+        email: doc(db, 'profile', localStorage.getItem('vishuser'))
+
+      })
+      data.projectpaid = true
     }
 
     return {
