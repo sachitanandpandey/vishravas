@@ -96,17 +96,20 @@
                                     <v-container>
                                         <v-row dense>
                                             <v-col cols="12">
-                                                <v-card color="#385F73" dark>
-                                                    <v-img :src=data.audilist[0].audition class="white--text align-end"
-                                                        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%"
-                                                        @click=audition()>
-                                                        <v-row><v-col cols="20">
-                                                                <h1>{{data.audilist[0].duration}}</h1>
-                                                            </v-col></v-row>
-                                                        <v-row><v-col cols="20">{{data.audilist[0].desc}}</v-col></v-row>
-                                                        <v-row></v-row>
-                                                    </v-img>
-                                                </v-card>
+                                                <v-hover v-slot="{ hover }">
+                                                    <v-card color="#385F73" dark :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }">
+                                                        <a href="">
+                                                            <v-img :src=data.audilist[0].audition class="white--text align-end"
+                                                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%" @click=audition()>
+                                                                <v-row><v-col cols="20">
+                                                                        <h1>{{data.audilist[0].duration}}</h1>
+                                                                    </v-col></v-row>
+                                                                <v-row><v-col cols="20">{{data.audilist[0].desc}}</v-col></v-row>
+                                                                <v-row></v-row>
+                                                            </v-img>
+                                                        </a>
+                                                    </v-card>
+                                                </v-hover>
                                             </v-col>
 
                                         </v-row>
@@ -121,6 +124,8 @@
                                         <!-- <form @submit.prevent="submit"> -->
                                         <v-btn rounded color="primary" dark @click="profile()">
                                             {{data.username}}
+                                            <v-chip>Profile</v-chip>
+
                                         </v-btn>
                                         <!-- </form> -->
                                     </v-col>

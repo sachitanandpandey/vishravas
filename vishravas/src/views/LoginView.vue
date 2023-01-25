@@ -1,5 +1,7 @@
 <template>
     <v-app id="app">
+        <template>
+        </template>
         <v-content>
             <v-container fluid fill-height>
                 <v-row>
@@ -40,15 +42,15 @@
                                                     <tr>Work at Backstage</tr>
                                                 </v-card-subtitle>
 
-                                                <v-card-actions>
+                                                <!-- <v-card-actions>
                                                     <v-btn text>
                                                         Login to Join
                                                     </v-btn>
-                                                </v-card-actions>
+                                                </v-card-actions> -->
                                             </v-card>
                                         </v-col>
 
-                                        <v-col v-for="(item, i) in noticelist" :key="i" cols="12">
+                                        <v-col v-for="(item, i) in vishDetails" :key="i" cols="12">
                                             <v-card :color="item.color" dark>
                                                 <div class="d-flex flex-no-wrap justify-space-between">
                                                     <div>
@@ -61,6 +63,22 @@
                                                                 <tr><v-icon>mdi-whatsapp</v-icon>{{item.whatapp}}</tr></v-btn>
 
                                                             <tr><v-icon>mdi-instagram</v-icon>{{item.instagram}}</tr> -->
+
+                                                            <div v-if="item.wapp">
+                                                                <tr>
+                                                                    <td>
+                                                                        <v-img class="shrink mr-2" :src="require('../assets/wapp.png')" width="60" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <v-chip>07459194020</v-chip>
+                                                                    </td>
+                                                                </tr>
+                                                            </div>
+                                                            <div v-if="item.insta">
+                                                                <a href="https://www.instagram.com/vishravas/" target="_blank">
+                                                                    <v-img class="shrink mr-2" :src="require('../assets/insta.png')" width="80" />
+                                                                </a>
+                                                            </div>
 
                                                         </v-card-actions>
                                                     </div>
@@ -89,6 +107,20 @@
             </v-container>
 
         </v-content>
+        <!-- <template>
+            <v-container>
+                <v-row class="text-h6 white--text font-italic">Our Sponsors</v-row>
+                <v-row>
+                    <div v-for="item in data.doclist" v-bind:key="item.id" class="pa-md-2 d-flex justify-end">
+                        <v-card max-width="250" height="50">
+                            <v-img :src=item.listposter class="white--text align-end"
+                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="100%" width="100%">
+                            </v-img>
+                        </v-card>
+                    </div>
+                </v-row>
+            </v-container>
+        </template> -->
         <template>
             <v-container>
                 <v-row>
@@ -100,7 +132,7 @@
                         </v-card>
                     </div>
                 </v-row>
-        </v-container>
+            </v-container>
         </template>
     </v-app>
 </template>
@@ -160,7 +192,7 @@ export default {
         })
     }
 
-    const noticelist = [
+    const vishDetails = [
       {
         color: '#1F7087',
         src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
@@ -171,14 +203,16 @@ export default {
         color: '#952175',
         src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
         title: 'Vishravas',
-        artist: '16 VistaCenter Salisbury Rd, Hounslow TW4 6JQ'
+        // artist: '16 VistaCenter Salisbury Rd, Hounslow TW4 6JQ',
+        insta: 'https://www.instagram.com/vishravas/',
+        wapp: '07459194020'
       }
     ]
 
     return {
       data,
       submit,
-      noticelist
+      vishDetails
     }
   }
 }

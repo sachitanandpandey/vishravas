@@ -26,20 +26,23 @@ export default Vue.extend({
                 <v-col cols="20">
                   <v-container>
                     <h1>Audition</h1>
-                    <v-card max-width="800px" height="100%" class="mt-2 mb-2">
+                    <v-card max-width="100%" height="100%" class="mt-2 mb-2">
                       <v-container>
                         <v-row dense>
                           <v-col cols="12">
                             <v-card color="#385F73" dark>
                               <div v-for="cast in data.doclist[0].casting" v-bind:key="cast.id">
 
-                                <v-chip> <v-chip class="ma-2" color="pink" label text-color="white">
-                                    <v-chip class="ma-2"><v-h4 class="ma-2">{{cast.name}}</v-h4></v-chip>
-                                    <v-chip class="ma-2"><v-h4 class="ma-2">Age: </v-h4>{{cast.age}}</v-chip>
-                                    <v-chip class="ma-2"><v-h4 class="ma-2">Gender: </v-h4>{{cast.gender}}</v-chip>
-                                    <v-chip class="ma-2"><v-h4 class="ma-2">Ethnicity: </v-h4>{{cast.ethnicity}}</v-chip>
+                                <v-card> <v-card class="ma-2" color="pink" label text-color="white" max-width="100%" height="100%">
+                                  <v-row>
+                                    <v-card class="ma-2"><v-h4 class="ma-2">{{cast.name}}</v-h4></v-card>
+                                    <v-card class="ma-2"><v-h4 class="ma-2"></v-h4>Age:{{cast.age}}</v-card>
+                                    <v-card class="ma-2"><v-h4 class="ma-2"></v-h4>Gender:{{cast.gender}}</v-card>
+                                    <v-card class="ma-2"><v-h4 class="ma-2"></v-h4>ethnicity:{{cast.ethnicity}}</v-card>
                                     <v-btn color="#385F73" @click=showdetails(cast)>ShowMore</v-btn>
-                                  </v-chip></v-chip>
+                                  </v-row>
+
+                                  </v-card></v-card>
 
                               </div>
                               <div v-if="data.dialog===true">
@@ -168,13 +171,6 @@ export default {
       const querySnapshot = await getDocs(qDoclist)
       data.doclist = querySnapshot.docs.map(doc => doc.data())
       data.id = querySnapshot.docs.map(doc => doc.id)
-      console.log(data.doclist)
-      console.log(data.id)
-      //   const queryPlist = await getDocs(qPremierlist)
-      //   data.premierlist = queryPlist.docs.map(doc => doc.data())
-      //   data.display = data.premierlist[0]
-      //   const queryFlist = await getDocs(qProgresslist)
-      //   data.audilist = queryFlist.docs.map(doc => doc.data())
     })
 
     onAuthStateChanged(auth, (user) => {
@@ -182,7 +178,6 @@ export default {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid
-        console.log(user.email)
         // ...
       } else {
         router.push('/')
@@ -194,13 +189,7 @@ export default {
         router.push('/')
       }).catch((error) => {
         const errorMessage = error.message
-        console.log(errorMessage)
       })
-    }
-
-    const replace = async () => {
-      //   data.display = item
-      //   console.log(data.dispaly.title)
     }
 
     const showdetails = async (item) => {
@@ -209,8 +198,7 @@ export default {
       }
       data.dialog = true
       data.showdetails = item
-      console.log(item)
-      console.log(data.dialog)
+      const qOrderlist = query(collection(db, 'vishorder'), where('email', '==', localStorage.getItem('vishuser')), where('project', '==', data.display.title))
     }
 
     const close = async () => {
@@ -218,25 +206,15 @@ export default {
       data.showdetails = ''
     }
 
-    const apply = async (item) => {
+    const apply = async (role) => {
       const email = localStorage.getItem('vishuser')
-      console.log(email)
-      console.log(data.id[0])
-      console.log(item.name)
-      const alovelaceDocumentRef = doc(db, 'profile', email)
       const colRef = collection(db, 'applicants')
-      const uniqueid = email + '_' + item.name + '_' + data.id[0]
-      // const post = {
-      //   role: item.name,
-      //   applicant: db.doc('profile/' + email)
-      // }
-      console.log(alovelaceDocumentRef)
+      const uniqueid = email + '_' + role.name + '_' + data.id[0]
 
       setDoc(doc(colRef, uniqueid), {
         project: data.id[0],
-        role: item.name,
+        role: role.name,
         applicant: doc(db, 'profile', email)
-        // applicant: db.doc('profile/' + email)
 
       })
     }
