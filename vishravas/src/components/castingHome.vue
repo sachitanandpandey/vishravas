@@ -63,14 +63,19 @@ export default Vue.extend({
                                     <v-col class="d-flex" cols="12" sm="12">
                                       {{data.showdetails.ethnicity}}
                                     </v-col>
-                                    <v-col class="d-flex justify-end" cols="12" sm="12" @click=apply(data.showdetails)>
-                                      <v-btn>
-                                      Apply
-                                    </v-btn>
+                                      <div v-if="data.isapplied === false">
+                                      <v-col class="d-flex justify-end" cols="12" sm="12" @click=apply(data.showdetails)>
+                                        <v-btn>
+                                        Apply
+                                      </v-btn>
                                     </v-col>
+                                    </div>
+                                    <div v-else>
+                                      <v-chip class="ma-2" color="green" text-color="white">Already Applied</v-chip>
+                                    </div>
                                   </v-col>
                                 </v-row>
-                                <v-btn color="#385F73" @click=close()>Close</v-btn>
+                                <v-btn color="pink" @click=close()>Close</v-btn>
                               </div>
                             </v-card>
                           </v-col>
@@ -158,7 +163,8 @@ export default {
     const data = reactive({
       id: '',
       doclist: '',
-      dialog: false
+      dialog: false,
+      isapplied: false
     })
     const auth = getAuth()
 
@@ -198,7 +204,17 @@ export default {
       }
       data.dialog = true
       data.showdetails = item
-      const qOrderlist = query(collection(db, 'vishorder'), where('email', '==', localStorage.getItem('vishuser')), where('project', '==', data.display.title))
+
+      const email = localStorage.getItem('vishuser')
+      const colRef = collection(db, 'applicants')
+      const uniqueid = email + '_' + item.name + '_' + data.id[0]
+
+      const qDoclist = query(collection(db, 'applicants'), where('role', '==', item.name), where('applicant', '==', doc(db, 'profile', email)))
+
+      const querySnapshot = await getDocs(qDoclist)
+      if (querySnapshot.docs.length === 1) {
+        data.isapplied = true
+      } else { data.isapplied = false }
     }
 
     const close = async () => {
@@ -210,6 +226,16 @@ export default {
       const email = localStorage.getItem('vishuser')
       const colRef = collection(db, 'applicants')
       const uniqueid = email + '_' + role.name + '_' + data.id[0]
+
+      const qDoclist = query(collection(db, 'applicants'), where('role', '==', role.name), where('applicant', '==', doc(db, 'profile', email)))
+
+      const querySnapshot = await getDocs(qDoclist)
+      console.log('*******************************')
+      console.log(querySnapshot)
+      console.log('*******************************')
+
+      // const todoRef = collection(db, 'todos');
+      // let allTodos = await getDocs(todoRef);
 
       setDoc(doc(colRef, uniqueid), {
         project: data.id[0],

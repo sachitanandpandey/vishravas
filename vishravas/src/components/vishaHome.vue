@@ -223,7 +223,6 @@ export default {
       data.audilist = queryFlist.docs.map(doc => doc.data())
       const qOrderlist = query(collection(db, 'vishorder'), where('email', '==', localStorage.getItem('vishuser')), where('project', '==', data.display.title))
       const orderSnap = await getDocs(qOrderlist)
-      console.log(orderSnap.docs.map(doc => doc.data()))
       if (orderSnap.docs.map(doc => doc.data()).length !== 0) { data.projectpaid = true } else { data.projectpaid = false }
     })
 
@@ -245,7 +244,6 @@ export default {
         router.push('/')
       }).catch((error) => {
         const errorMessage = error.message
-        console.log(errorMessage)
       })
     }
 
@@ -270,7 +268,6 @@ export default {
     }
 
     const buyticket = async (item) => {
-      console.log(item)
       const colRef = collection(db, 'vishorder')
       const uniqueid = localStorage.getItem('vishuser') + '_' + item.title
       setDoc(doc(colRef, uniqueid), {

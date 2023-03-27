@@ -108,16 +108,16 @@
                                                                     placeholder="Hindi, Urdu, English, Gujrati, Marathi, Punjabi, Tamil, Telgu" required id="ip1">
                                                             </v-col>
                                                             <v-col class="d-flex" cols="12" sm="12">
-                                                                <input v-model="data.location" label='Location' class="form-control mt-2 ml-2 mr-2 mb-1"
-                                                                    placeholder="Available in London , Reading, " required id="ip1">
+                                                                <input v-model="data.location" label='Location'
+                                                                    placeholder="Available in London , Reading, "  required id="ip1">
                                                             </v-col>
 
                                                             <v-col class="d-flex" cols="12" sm="12">
-                                                                <v-select v-model="data.gender" :items="GenderOptions" label="Gender" solo>
+                                                                <v-select v-model="data.gender" :items="GenderOptions" label="Gender">
                                                                 </v-select>
                                                             </v-col>
                                                             <v-col class="d-flex" cols="12" sm="12">
-                                                                <v-select v-model="data.weekend" :items="weekendOptions" label="Avaiable on Weekend" solo>
+                                                                <v-select v-model="data.weekend" :items="weekendOptions" label="Avaiable on Weekend">
                                                                 </v-select>
                                                             </v-col>
                                                         </v-col>
